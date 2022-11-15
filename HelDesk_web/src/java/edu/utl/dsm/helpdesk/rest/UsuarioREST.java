@@ -2,6 +2,11 @@ package edu.utl.dsm.helpdesk.rest;
 import com.google.gson.Gson;
 import edu.utl.dsm.helpdesk.controller.UsuarioController;
 import edu.utl.dsm.helpdesk.model.Usuario;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Date;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -27,17 +32,29 @@ public class UsuarioREST {
             if (usuario.getId() == 0) {
                 out = "{\"error\":\"El usuario no existe, "
                         + "Vuelve a intentarlo, o llama al administrador del sistema\"}";
+                return Response.status(Response.Status.UNAUTHORIZED).build();
             } else {
+                String key = "libros";
+                long fecha = System.currentTimeMillis();
+                String token = Jwts.builder()
+                                   .signWith(SignatureAlgorithm.HS256, key)
+                                   .setSubject(usuario.getNombreUsuario())
+                                   .setIssuedAt(new Date (fecha))
+                                   .setExpiration(new Date (fecha + 900000))
+                                   .claim("nombreUsu", usuario.getNombreUsuario())
+                                   .compact();
+                
+                JsonObject js = Json.createObjectBuilder().add("JWT", token).build();
                 Gson gs = new Gson();
                 out = gs.toJson(usuario);
+                return Response.status(Response.Status.CREATED).entity(js).build();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
             out = "{\"error\":\"Ocurrió una falla , "
                     + "Vuelve a intentarlo, o llama al administrador del sistema\"}";
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
-        return Response.status(Response.Status.OK).entity(out).build();
-
     }
     
     @Path("register")
