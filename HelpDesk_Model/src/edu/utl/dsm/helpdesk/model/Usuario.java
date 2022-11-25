@@ -13,20 +13,18 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(int id, String nombres, String apellidos, int estatus, String nombreUsuario, String contrasennia, int rol) {
+    public Usuario(int id, String nombres, String apellidos, String nombreUsuario, String contrasennia, int rol) {
         this.id = id;
         this.nombres = nombres;
         this.apellidos = apellidos;
-        this.estatus = estatus;
         this.nombreUsuario = nombreUsuario;
         this.contrasennia = contrasennia;
         this.rol = rol;
     }
 
-    public Usuario(String nombres, String apellidos, int estatus, String nombreUsuario, String contrasennia, int rol) {
+    public Usuario(String nombres, String apellidos,  String nombreUsuario, String contrasennia, int rol) {
         this.nombres = nombres;
         this.apellidos = apellidos;
-        this.estatus = estatus;
         this.nombreUsuario = nombreUsuario;
         this.contrasennia = contrasennia;
         this.rol = rol;

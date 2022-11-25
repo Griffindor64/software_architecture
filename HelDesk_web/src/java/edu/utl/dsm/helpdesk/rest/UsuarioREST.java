@@ -73,7 +73,7 @@ public class UsuarioREST {
             UsuarioController objUsuC = new UsuarioController();
             
             Gson gs = new Gson();
-            Usuario usu = new Usuario(nombres, apellidos, nombreUsuario, contrasennia);
+            Usuario usu = new Usuario(nombres, apellidos, nombreUsuario, contrasennia, Integer.valueOf(rol));
             int nU = objUsuC.registrarUsuario(usu);
             if (nU == 0) {
                 out = "{\"error\":\"Error , "

@@ -5,6 +5,7 @@ import edu.utl.dsm.helpdesk.controller.UsuarioController;
 import edu.utl.dsm.helpdesk.cqrs.LibroCQRS;
 import edu.utl.dsm.helpdesk.cqrs.UsuarioCQRS;
 import edu.utl.dsm.helpdesk.dao.LibroComandosDAO;
+import edu.utl.dsm.helpdesk.dao.UsuarioComandosDAO;
 import edu.utl.dsm.helpdesk.model.Usuario;
 import edu.utl.dsm.helpdesk.model.Libro;
 
@@ -16,8 +17,8 @@ public class Prueba {
 
     public static void main(String[] args) throws Exception {
         //probarCon();
-//        probarGetAll();
-        probarActualizar();
+        probarEliminarU();
+//        probarActualizarU();
 //        probarRegister();
     }
 
@@ -25,8 +26,7 @@ public class Prueba {
 
         try {
             UsuarioController lg = new UsuarioController();
-            Usuario u = lg.iniciarSesion("jessic", "1234");
-            System.out.println(u.toString());
+            System.out.println(lg.iniciarSesion("jessi", "1234"));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -46,17 +46,17 @@ public class Prueba {
 
     }
     
-//    public static void probarGetAll() {
-//        try {
-//            LibrosDAO objLD = new LibrosDAO();
-//            List<Libro> libros = objLD.getAllLibros();
-//            for (int i = 0; i < libros.size(); i++) {
-//                System.out.println(libros.get(i).toString());
-//            }
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//    }
+    public static void probarGetAll() {
+        try {
+            UsuarioComandosDAO objLD = new UsuarioComandosDAO();
+            List<Usuario> libros = objLD.mostrarUsuario(2);
+            for (int i = 0; i < libros.size(); i++) {
+                System.out.println(libros.get(i).toString());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 //    
 //    public static void probarInsertL() {
 //
@@ -82,11 +82,32 @@ public class Prueba {
         }
     }
     
+     public static void probarActualizarU() {
+
+        Usuario l = new Usuario(2, "Juanito", "Perez", "juanito", "123", 2);
+        UsuarioController ld = new UsuarioController();
+        try {
+            ld.actualizarUsuario(l);
+        } catch (Exception ex) {
+            Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public static void probarEliminar() {
 
         LibroController ld = new LibroController();
         try {
             ld.eliminarLibro(5);
+        } catch (Exception ex) {
+            Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void probarEliminarU() {
+
+        UsuarioController ld = new UsuarioController();
+        try {
+            ld.eliminarUsuario(3);
         } catch (Exception ex) {
             Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -106,7 +127,7 @@ public class Prueba {
 
     public static void probarRegister() {
 
-        Usuario usu = new Usuario("cris", "1234");
+        Usuario usu = new Usuario("Julieta", "Guillen", "julieta", "1234", 2);
         UsuarioCQRS uD = new UsuarioCQRS();
         try {
             int id = uD.registrarUsuario(usu);
