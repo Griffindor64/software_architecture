@@ -1,23 +1,35 @@
 package edu.utl.dsm.helpdesk.model;
 
 public class Usuario {
-    
+
     private int id;
+    private String nombres;
+    private String apellidos;
+    private int estatus;
     private String nombreUsuario;
     private String contrasennia;
+    private int rol;
 
     public Usuario() {
     }
 
-    public Usuario(int id, String nombreUsuario, String contrasennia) {
+    public Usuario(int id, String nombres, String apellidos, int estatus, String nombreUsuario, String contrasennia, int rol) {
         this.id = id;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.estatus = estatus;
         this.nombreUsuario = nombreUsuario;
         this.contrasennia = contrasennia;
+        this.rol = rol;
     }
 
-    public Usuario(String nombreUsuario, String contrasennia) {
+    public Usuario(String nombres, String apellidos, int estatus, String nombreUsuario, String contrasennia, int rol) {
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.estatus = estatus;
         this.nombreUsuario = nombreUsuario;
         this.contrasennia = contrasennia;
+        this.rol = rol;
     }
 
     public int getId() {
@@ -26,6 +38,30 @@ public class Usuario {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public int getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(int estatus) {
+        this.estatus = estatus;
     }
 
     public String getNombreUsuario() {
@@ -44,9 +80,19 @@ public class Usuario {
         this.contrasennia = contrasennia;
     }
 
+    public int getRol() {
+        return rol;
+    }
+
+    public void setRol(int rol) {
+        this.rol = rol;
+    }
+
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nombreUsuario=" + nombreUsuario + ", contrasennia=" + contrasennia + '}';
-    }    
+        return "Usuario{" + "id=" + id + ", nombres=" + nombres + ", apellidos=" + apellidos + ", estatus=" + estatus + ", nombreUsuario=" + nombreUsuario + ", contrasennia=" + contrasennia + ", rol=" + rol + '}';
+    }
+
+    
 
 }
