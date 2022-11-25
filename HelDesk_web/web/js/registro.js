@@ -1,7 +1,9 @@
 const registrarUsuario = () =>
 {
-    let nombreUsuario = document.getElementById('txtNUsuario').value;
+    let nombres = document.getElementById('txtNombres').value;
+    let apellidos = document.getElementById('txtApellidos').value;
     let contrasennia = document.getElementById('txtContrasennia').value;
+    let nombreUsuario = document.getElementById('txtContrasennia').value;
 
     if ($("#lblusuario").text() == " Usuario no válido") {
         alert("El usuario ya esta en uso o es nulo ingrese otro");
@@ -10,8 +12,11 @@ const registrarUsuario = () =>
             alert("Nombre de usuario vacio es necesario llenar este campo");
         } else {
             let data = {
+                "nombres": nombres,
+                "apellidos" : apellidos,
                 "nombreUsuario": nombreUsuario,
-                "contrasennia": contrasennia
+                "contrasennia": contrasennia,
+                "rol" : 1
             };
 
             $.ajax(

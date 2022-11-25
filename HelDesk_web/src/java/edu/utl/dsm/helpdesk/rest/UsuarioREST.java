@@ -12,6 +12,7 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -46,29 +47,33 @@ public class UsuarioREST {
                 
                 JsonObject js = Json.createObjectBuilder().add("JWT", token).build();
                 Gson gs = new Gson();
-                out = gs.toJson(usuario);
-                return Response.status(Response.Status.CREATED).entity(js).build();
+                out = gs.toJson(js);
+                return Response.status(Response.Status.CREATED).entity(out).build();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
             out = "{\"error\":\"Ocurrió una falla , "
                     + "Vuelve a intentarlo, o llama al administrador del sistema\"}";
-            return Response.status(Response.Status.UNAUTHORIZED).build();
+            return Response.status(Response.Status.OK).entity(out).build();
         }
     }
     
     @Path("register")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response register(@FormParam("nombreUsuario") @DefaultValue("") String nombreUsuario,
-            @FormParam("contrasennia") @DefaultValue("") String contrasennia) {
+    public Response register(
+            @FormParam("nombres") @DefaultValue("") String nombres,
+            @FormParam("apellidos") @DefaultValue("") String apellidos,
+            @FormParam("nombreUsuario") @DefaultValue("") String nombreUsuario,
+            @FormParam("contrasennia") @DefaultValue("") String contrasennia,
+            @FormParam("rol") @DefaultValue("") String rol) {
 
         String out = "";
         try {
             UsuarioController objUsuC = new UsuarioController();
             
             Gson gs = new Gson();
-            Usuario usu = new Usuario(nombreUsuario, contrasennia);
+            Usuario usu = new Usuario(nombres, apellidos, nombreUsuario, contrasennia);
             int nU = objUsuC.registrarUsuario(usu);
             if (nU == 0) {
                 out = "{\"error\":\"Error , "
