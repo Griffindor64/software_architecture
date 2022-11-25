@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class UsuarioComandosDAO {
      public int registrarUsuario(Usuario usuario) throws Exception {
         //Se define la consulta a ejecutar
-        String query = "insert into users (username, password) values (?,?);";
+        String query = "insert into usuario (username, password) values (?,?);";
         int idGenerado = -1;
         //Generamos el objeto de la conexion
         ConexionMySQL connMySQL = new ConexionMySQL();
@@ -45,7 +45,7 @@ public class UsuarioComandosDAO {
     public Usuario iniciarSesion(String nombreUsuario, String contrasennia) throws Exception {
 
         //Se define la consulta a ejecutar
-        String query = "SELECT * FROM users WHERE username = ? AND password = ?;";
+        String query = "SELECT * FROM usuario WHERE username = ? AND password = ?;";
         //Generamos el objeto de la conexion
         ConexionMySQL connMySQL = new ConexionMySQL();
         //Abrimos la conexion
@@ -74,7 +74,7 @@ public class UsuarioComandosDAO {
     }
 
     public Usuario validarNombreUsuario(String nombreUsuario) throws Exception {
-        String query = "SELECT * FROM users WHERE username LIKE'" + nombreUsuario + "';";
+        String query = "SELECT * FROM usuario WHERE username LIKE'" + nombreUsuario + "';";
 
         ConexionMySQL connMySQL = new ConexionMySQL();
         Connection conn = connMySQL.open();
