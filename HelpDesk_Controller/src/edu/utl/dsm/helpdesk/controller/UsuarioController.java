@@ -2,8 +2,17 @@ package edu.utl.dsm.helpdesk.controller;
 
 import edu.utl.dsm.helpdesk.DDD.UsuarioAppServicies;
 import edu.utl.dsm.helpdesk.model.Usuario;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsuarioController {
+
+    public List<Usuario> getAllUsuarios(int estatus) throws Exception {
+        UsuarioAppServicies objUsuAS = new UsuarioAppServicies();
+        List<Usuario> usuarios = new ArrayList<>();
+        usuarios = objUsuAS.getAllUsuarios(estatus);
+        return usuarios;
+    }
 
     public Usuario iniciarSesion(String nombreUsuario, String contrasennia) throws Exception {
         UsuarioAppServicies objUsuAS = new UsuarioAppServicies();

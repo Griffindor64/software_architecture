@@ -1,10 +1,13 @@
 package edu.utl.dsm.helpdesk.rest;
+
 import com.google.gson.Gson;
 import edu.utl.dsm.helpdesk.controller.UsuarioController;
 import edu.utl.dsm.helpdesk.model.Usuario;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.DefaultValue;
@@ -18,7 +21,7 @@ import javax.ws.rs.core.Response;
 
 @Path("user")
 public class UsuarioREST {
- 
+
     @Path("login")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -38,13 +41,13 @@ public class UsuarioREST {
                 String key = "libros";
                 long fecha = System.currentTimeMillis();
                 String token = Jwts.builder()
-                                   .signWith(SignatureAlgorithm.HS256, key)
-                                   .setSubject(usuario.getNombreUsuario())
-                                   .setIssuedAt(new Date (fecha))
-                                   .setExpiration(new Date (fecha + 900000))
-                                   .claim("nombreUsu", usuario.getNombreUsuario())
-                                   .compact();
-                
+                        .signWith(SignatureAlgorithm.HS256, key)
+                        .setSubject(usuario.getNombreUsuario())
+                        .setIssuedAt(new Date(fecha))
+                        .setExpiration(new Date(fecha + 900000))
+                        .claim("nombreUsu", usuario.getNombreUsuario())
+                        .compact();
+
                 JsonObject js = Json.createObjectBuilder().add("JWT", token).build();
                 Gson gs = new Gson();
                 out = gs.toJson(js);
@@ -57,7 +60,7 @@ public class UsuarioREST {
             return Response.status(Response.Status.OK).entity(out).build();
         }
     }
-    
+
     @Path("register")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -71,7 +74,7 @@ public class UsuarioREST {
         String out = "";
         try {
             UsuarioController objUsuC = new UsuarioController();
-            
+
             Gson gs = new Gson();
             Usuario usu = new Usuario(nombres, apellidos, nombreUsuario, contrasennia, Integer.valueOf(rol));
             int nU = objUsuC.registrarUsuario(usu);
@@ -83,7 +86,59 @@ public class UsuarioREST {
                 out = gs.toJson(usu);
             }
 
-            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            out = "{\"error\":\"Ocurrió una falla , "
+                    + "Vuelve a intentarlo, o llama al administrador del sistema\"}";
+        }
+        return Response.status(Response.Status.OK).entity(out).build();
+
+    }
+
+    @Path("delete")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response delete(@FormParam("id") @DefaultValue("") String id) {
+        String out = "";
+        try {
+
+            UsuarioController objUsuC = new UsuarioController();
+            if (objUsuC.eliminarUsuario(Integer.parseInt(id))) {
+                out = "{\"result\":\"Se ha eliminado correctamente el usuario\"}";
+            } else {
+                out = "{\"error\":\"Ocurrió una falla , "
+                        + "Recuerda que el usuario debe existir para poder eliminarlo\"}";
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            out = "{\"error\":\"Ocurrió una falla , "
+                    + "Vuelve a intentarlo, o llama al administrador del sistema\"}";
+        }
+        return Response.status(Response.Status.OK).entity(out).build();
+    }
+
+    @Path("update")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response update(
+            @FormParam("id") @DefaultValue("") String id,
+            @FormParam("nombres") @DefaultValue("") String nombres,
+            @FormParam("apellidos") @DefaultValue("") String apellidos,
+            @FormParam("nombreUsuario") @DefaultValue("") String nombreUsuario,
+            @FormParam("contrasennia") @DefaultValue("") String contrasennia,
+            @FormParam("rol") @DefaultValue("") String rol) {
+
+        String out = "";
+        try {
+            UsuarioController objUsuC = new UsuarioController();
+            Gson gs = new Gson();
+            Usuario objUsuario = new Usuario(Integer.valueOf(id),nombres, apellidos, nombreUsuario, contrasennia, Integer.valueOf(rol));
+            if (objUsuC.actualizarUsuario(objUsuario)) {
+                out = "{\"result\":\"La actualización resultó exitosa\"}";
+            } else {
+                out = "{\"error\":\"Ocurrió una falla , "
+                        + "Recuerda que el nombre de usuario debe ser unico\"}";
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             out = "{\"error\":\"Ocurrió una falla , "
@@ -114,5 +169,25 @@ public class UsuarioREST {
         }
         return Response.status(Response.Status.OK).entity(out).build();
 
+    }
+
+    @Path("getAll")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAll(@FormParam("estatus") @DefaultValue("") String estatus) {
+        String out = "";
+
+        try {
+            UsuarioController objUsuC = new UsuarioController();
+            List<Usuario> usuarios = new ArrayList<>();
+            usuarios = objUsuC.getAllUsuarios(Integer.parseInt(estatus));
+            Gson objGS = new Gson();
+            out = objGS.toJson(usuarios);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            out = "{\"error\":\"Hubo un error al cargar los libros"
+                    + " vuelve a intentarlo o llama al administrador del sistema\"}";
+        }
+        return Response.status(Response.Status.OK).entity(out).build();
     }
 }
