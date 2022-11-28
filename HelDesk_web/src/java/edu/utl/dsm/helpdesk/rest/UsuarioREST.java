@@ -173,15 +173,25 @@ public class UsuarioREST {
     }
 
     @Path("getAll")
+<<<<<<< HEAD
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll(@QueryParam("rol") @DefaultValue("") String rol) {
+=======
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAll(@FormParam("estatus") @DefaultValue("") String estatus) {
+>>>>>>> 35123ea89056266a7b584197088d2e24aa2649ab
         String out = "";
 
         try {
             UsuarioController objUsuC = new UsuarioController();
             List<Usuario> usuarios = new ArrayList<>();
+<<<<<<< HEAD
             usuarios = objUsuC.getAllUsuarios(Integer.parseInt(rol));
+=======
+            usuarios = objUsuC.getAllUsuarios(Integer.parseInt(estatus));
+>>>>>>> 35123ea89056266a7b584197088d2e24aa2649ab
             Gson objGS = new Gson();
             out = objGS.toJson(usuarios);
         } catch (Exception ex) {

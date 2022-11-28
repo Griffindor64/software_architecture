@@ -8,10 +8,17 @@ import java.util.List;
 
 public class UsuarioAppServicies {
 
+<<<<<<< HEAD
     public List<Usuario> getAllUsuarios(int rol) throws Exception {
         UsuarioComandosDAO objUsuDAO = new UsuarioComandosDAO();
         List<Usuario> usuarios = new ArrayList<>();
         usuarios = objUsuDAO.mostrarUsuario(rol);
+=======
+    public List<Usuario> getAllUsuarios(int estatus) throws Exception {
+        UsuarioComandosDAO objUsuDAO = new UsuarioComandosDAO();
+        List<Usuario> usuarios = new ArrayList<>();
+        usuarios = objUsuDAO.mostrarUsuario(estatus);
+>>>>>>> 35123ea89056266a7b584197088d2e24aa2649ab
         return usuarios;
     }
     
