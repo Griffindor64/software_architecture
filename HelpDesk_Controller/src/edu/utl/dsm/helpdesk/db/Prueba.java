@@ -17,24 +17,20 @@ public class Prueba {
 
     public static void main(String[] args) throws Exception {
         //probarCon();
-<<<<<<< HEAD
         //probarEliminarU();
         //probarActualizarU();
         //probarRegister();
         //probarLogin();
         probarGetAllUsuario();
-=======
         probarEliminarU();
 //        probarActualizarU();
 //        probarRegister();
->>>>>>> 35123ea89056266a7b584197088d2e24aa2649ab
     }
 
     public static void probarLogin() {
 
         try {
             UsuarioController lg = new UsuarioController();
-<<<<<<< HEAD
             System.out.println(lg.iniciarSesion("German", "1234"));
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -51,9 +47,8 @@ public class Prueba {
             for (int i = 0; i < usuarios.size(); i++) {
                 System.out.println(usuarios.get(i));
             }
-=======
+
             System.out.println(lg.iniciarSesion("jessi", "1234"));
->>>>>>> 35123ea89056266a7b584197088d2e24aa2649ab
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -3,11 +3,8 @@ const registrarUsuario = () =>
     let nombres = document.getElementById('txtNombres').value;
     let apellidos = document.getElementById('txtApellidos').value;
     let contrasennia = document.getElementById('txtContrasennia').value;
-<<<<<<< HEAD
     let nombreUsuario = document.getElementById('txtNUsuario').value;
-=======
     let nombreUsuario = document.getElementById('txtContrasennia').value;
->>>>>>> 35123ea89056266a7b584197088d2e24aa2649ab
 
     if ($("#lblusuario").text() == " Usuario no válido") {
         alert("El usuario ya esta en uso o es nulo ingrese otro");
