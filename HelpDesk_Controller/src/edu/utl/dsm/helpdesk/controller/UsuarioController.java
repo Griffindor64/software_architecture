@@ -7,10 +7,10 @@ import java.util.List;
 
 public class UsuarioController {
 
-    public List<Usuario> getAllUsuarios(int estatus) throws Exception {
+    public List<Usuario> getAllUsuarios(int rol) throws Exception {
         UsuarioAppServicies objUsuAS = new UsuarioAppServicies();
         List<Usuario> usuarios = new ArrayList<>();
-        usuarios = objUsuAS.getAllUsuarios(estatus);
+        usuarios = objUsuAS.getAllUsuarios(rol);
         return usuarios;
     }
 

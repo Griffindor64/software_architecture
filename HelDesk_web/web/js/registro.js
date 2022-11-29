@@ -3,6 +3,7 @@ const registrarUsuario = () =>
     let nombres = document.getElementById('txtNombres').value;
     let apellidos = document.getElementById('txtApellidos').value;
     let contrasennia = document.getElementById('txtContrasennia').value;
+    let nombreUsuario = document.getElementById('txtNUsuario').value;
     let nombreUsuario = document.getElementById('txtContrasennia').value;
 
     if ($("#lblusuario").text() == " Usuario no válido") {

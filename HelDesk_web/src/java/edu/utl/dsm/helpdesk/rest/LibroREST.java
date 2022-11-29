@@ -5,13 +5,16 @@ import edu.utl.dsm.helpdesk.MVVM.LibroViewModel;
 import edu.utl.dsm.helpdesk.apiservice.ApiService;
 import edu.utl.dsm.helpdesk.controller.LibroController;
 import edu.utl.dsm.helpdesk.model.Libro;
+import edu.utl.dsm.helpdesk.model.Usuario;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.DefaultValue;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -22,17 +25,19 @@ import javax.ws.rs.core.Response;
 public class LibroREST {
 
     @Path("insert")
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response insert(@QueryParam("nombre") @DefaultValue("") String nombre,
-            @QueryParam("descripcion") @DefaultValue("") String descripcion,
-            @QueryParam("tema") @DefaultValue("") String tema) {
+    public Response insert(@FormParam("nombre") @DefaultValue("") String nombre,
+            @FormParam("descripcion") @DefaultValue("") String descripcion,
+            @FormParam("tema") @DefaultValue("") String tema,
+            @FormParam("usuario") @DefaultValue("") String usuario) {
 
         String out = "";
         try {
             LibroController objLibC = new LibroController();
             Gson gs = new Gson();
-            Libro l = new Libro(nombre, descripcion, tema);
+            Usuario objU = gs.fromJson(usuario, Usuario.class);
+            Libro l = new Libro(nombre, descripcion, tema, objU);
             int id = objLibC.registrarLibro(l);
             l.setId(id);
             out = gs.toJson(l);
