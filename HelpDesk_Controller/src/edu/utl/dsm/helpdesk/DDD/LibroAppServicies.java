@@ -5,6 +5,7 @@ import edu.utl.dsm.helpdesk.MVVM.LibroViewModel;
 import edu.utl.dsm.helpdesk.cqrs.LibroCQRS;
 import edu.utl.dsm.helpdesk.dao.LibroConsultasDAO;
 import edu.utl.dsm.helpdesk.model.Libro;
+import edu.utl.dsm.helpdesk.model.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class LibroAppServicies {
 
     public int registrarLibroPublic(LibroViewModel l) throws Exception {
         LibroCQRS lCQRS = new LibroCQRS();
-        Libro libro = new Libro(l.getNombre_lbr(),l.getDescripcion_lbr(),l.getTema_lbr());
+        Libro libro = new Libro(l.getNombre_lbr(),l.getDescripcion_lbr(),l.getTema_lbr(), new Usuario(0,"","","","",0));
         int id = lCQRS.registrarLibro(libro);
         return id;
     }
@@ -49,7 +50,7 @@ public class LibroAppServicies {
     
     public Boolean actualizarLibroPublic(LibroViewModel l) throws Exception {
         LibroCQRS lCQRS = new LibroCQRS();
-        Libro libro = new Libro(l.getId_lbr(), l.getNombre_lbr(), l.getDescripcion_lbr(), l.getTema_lbr());
+        Libro libro = new Libro(l.getId_lbr(), l.getNombre_lbr(), l.getDescripcion_lbr(), l.getTema_lbr(),new Usuario(0,"","","","",0));
         return lCQRS.actualizarLibro(libro);
     }
     

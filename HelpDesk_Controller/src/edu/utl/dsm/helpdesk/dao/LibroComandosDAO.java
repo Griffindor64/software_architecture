@@ -9,10 +9,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class LibroComandosDAO {
-    
+
     public int registrarLibro(Libro b) throws Exception {
         //Se define la consulta a ejecutar
-        String query = "insert into libro (nombre, descripcion, tema) values (?,?,?);";
+        String query = "insert into libro (nombre, descripcion, tema, idUsuario) values (?,?,?,?);";
         int idGenerado = -1;
         //Generamos el objeto de la conexion
         ConexionMySQL connMySQL = new ConexionMySQL();
@@ -28,6 +28,7 @@ public class LibroComandosDAO {
         pstmt.setString(1, b.getNombre());
         pstmt.setString(2, b.getDescripcion());
         pstmt.setString(3, b.getTema());
+        pstmt.setInt(4, b.getUsuario().getId());
         //Objeto de tipo user
         pstmt.executeUpdate();
 
@@ -47,8 +48,8 @@ public class LibroComandosDAO {
 
     public void actualizarLibro(Libro libro) throws Exception {
         //Se define la consulta a ejecutar
-        String query = "update libro set nombre = '" + libro.getNombre()+ "', "
-                + "descripcion = '" + libro.getDescripcion() + "' , tema = '" + libro.getTema()+ "'"
+        String query = "update libro set nombre = '" + libro.getNombre() + "', "
+                + "descripcion = '" + libro.getDescripcion() + "' , tema = '" + libro.getTema() + "'"
                 + "   where id = " + libro.getId() + ";";
 
         //Generamos el objeto de la conexion
@@ -81,7 +82,7 @@ public class LibroComandosDAO {
         pstmt.close();
         connMySQL.close();
     }
-    
+
     public Libro validarNombreLibro(String nombre) throws Exception {
         String query = "SELECT * FROM libro WHERE nombre LIKE'" + nombre + "';";
 
@@ -104,9 +105,9 @@ public class LibroComandosDAO {
         rs.close();
         pstmt.close();
         connMySQL.close();
-        
+
         return libro;
-        
+
     }
-    
+
 }

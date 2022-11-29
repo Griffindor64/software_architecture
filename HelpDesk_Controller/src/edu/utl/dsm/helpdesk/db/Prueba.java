@@ -8,7 +8,6 @@ import edu.utl.dsm.helpdesk.dao.LibroComandosDAO;
 import edu.utl.dsm.helpdesk.dao.UsuarioComandosDAO;
 import edu.utl.dsm.helpdesk.model.Usuario;
 import edu.utl.dsm.helpdesk.model.Libro;
-
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +16,7 @@ public class Prueba {
 
     public static void main(String[] args) throws Exception {
         //probarCon();
-        probarEliminarU();
+        probarInsertL();
 //        probarActualizarU();
 //        probarRegister();
     }
@@ -57,24 +56,26 @@ public class Prueba {
             ex.printStackTrace();
         }
     }
-//    
-//    public static void probarInsertL() {
-//
-//        Libro l = new Libro("libro1", "descripcion","tema");
-//        LibrosDAO ld = new LibrosDAO();
-//        try {
-//            int id = ld.registrarLibro(l);
-//            System.out.println("El registro ha sido completado " + id);
-//        } catch (Exception ex) {
-//            Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//    
+    
+    public static void probarInsertL() {        
+        Usuario usu = new Usuario(2,"Julieta", "Guillen", "july", "12344", 2);
+        Libro l = new Libro("librito", "descripcion","tema",usu);
+        System.out.println(l.getUsuario());
+        LibroController ld = new LibroController();
+        try {
+            int id = ld.registrarLibro(l);
+            System.out.println("El registro ha sido completado " + id);
+        } catch (Exception ex) {
+            Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     
     public static void probarActualizar() {
+        Usuario u = new Usuario(1,"", "", "", "", 1);
 
-        Libro l = new Libro(8,"li", "des","tema");
-        LibroCQRS ld = new LibroCQRS();
+        Libro l = new Libro(1,"libb", "des","tema",u);
+        LibroController ld = new LibroController();
         try {
             ld.actualizarLibro(l);
         } catch (Exception ex) {

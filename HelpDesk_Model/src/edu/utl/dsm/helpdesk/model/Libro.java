@@ -3,11 +3,12 @@ package edu.utl.dsm.helpdesk.model;
 import java.io.InputStream;
 
 public class Libro {
+
     private int id;
     private String nombre, descripcion, tema;
     private Usuario usuario;
     private InputStream archivo;
-    
+
     public Libro() {
     }
 
@@ -20,17 +21,19 @@ public class Libro {
         this.archivo = archivo;
     }
 
-    
-    public Libro(int id, String nombre, String descripcion, String tema) {
+    public Libro(int id, String nombre, String descripcion, String tema, Usuario usuario) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.tema = tema;
+        this.usuario = usuario;
+
     }
 
-    public Libro(String nombre, String descripcion, String tema) {
+    public Libro(String nombre, String descripcion, String tema, Usuario usuario) {
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.usuario = usuario;
         this.tema = tema;
     }
 
@@ -49,9 +52,7 @@ public class Libro {
     public void setArchivo(InputStream archivo) {
         this.archivo = archivo;
     }
-    
-    
-    
+
     public int getId() {
         return id;
     }
@@ -86,9 +87,7 @@ public class Libro {
 
     @Override
     public String toString() {
-        return "Libro{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", tema=" + tema + '}';
+        return "Libro{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", tema=" + tema + ", usuario=" + usuario.toString() + '}';
     }
 
-   
-    
 }

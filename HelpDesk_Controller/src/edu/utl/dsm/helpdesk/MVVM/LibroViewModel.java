@@ -8,7 +8,7 @@ package edu.utl.dsm.helpdesk.MVVM;
 public class LibroViewModel {
     private int id_lbr;
     private String nombre_lbr, descripcion_lbr, tema_lbr;
-
+    
     public LibroViewModel(String nombre_lbr, String descripcion_lbr, String tema_lbr) {
         this.nombre_lbr = nombre_lbr;
         this.descripcion_lbr = descripcion_lbr;
