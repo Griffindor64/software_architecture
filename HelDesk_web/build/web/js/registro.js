@@ -4,7 +4,6 @@ const registrarUsuario = () =>
     let apellidos = document.getElementById('txtApellidos').value;
     let contrasennia = document.getElementById('txtContrasennia').value;
     let nombreUsuario = document.getElementById('txtNUsuario').value;
-    let nombreUsuario = document.getElementById('txtContrasennia').value;
 
     if ($("#lblusuario").text() == " Usuario no válido") {
         alert("El usuario ya esta en uso o es nulo ingrese otro");
@@ -17,7 +16,7 @@ const registrarUsuario = () =>
                 "apellidos" : apellidos,
                 "nombreUsuario": nombreUsuario,
                 "contrasennia": contrasennia,
-                "rol" : 1
+                "rol" : 2
             };
 
             $.ajax(
