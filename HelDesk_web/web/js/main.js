@@ -19,6 +19,6 @@ function moduloUsuarios()
     }).done(function (data)
     {
         $("#contenedor").html(data);
-        cargarUsuarios();
+        cargarUsuAlumnos();
     });
 }

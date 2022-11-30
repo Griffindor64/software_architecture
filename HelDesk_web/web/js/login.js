@@ -26,8 +26,9 @@ const loginUsuario = () =>
                     $("#error").html("Hubo un error verifica que los datos esten bien e intentalo de nuevo");
 
                 } else {
-                    alert(JSON.stringify(data));
-                    window.location.replace("gestion/libro.html");
+                    console.log(JSON.stringify(data));
+                    alert(JSON.stringify(data.JWT.value));                    
+                    window.location.replace("main.html");
                 }
             });
 

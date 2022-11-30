@@ -2,12 +2,9 @@ package edu.utl.dsm.helpdesk.db;
 
 import edu.utl.dsm.helpdesk.controller.LibroController;
 import edu.utl.dsm.helpdesk.controller.UsuarioController;
-import edu.utl.dsm.helpdesk.cqrs.LibroCQRS;
 import edu.utl.dsm.helpdesk.cqrs.UsuarioCQRS;
-import edu.utl.dsm.helpdesk.dao.LibroComandosDAO;
 import edu.utl.dsm.helpdesk.dao.UsuarioComandosDAO;
 import edu.utl.dsm.helpdesk.model.Usuario;
-import edu.utl.dsm.helpdesk.model.Libro;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -91,18 +88,18 @@ public class Prueba {
 //            Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
+////    
 //    
-    
-    public static void probarActualizar() {
-
-        Libro l = new Libro(8,"li", "des","tema");
-        LibroCQRS ld = new LibroCQRS();
-        try {
-            ld.actualizarLibro(l);
-        } catch (Exception ex) {
-            Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    public static void probarActualizar() {
+//
+//        Libro l = new Libro(8,"li", "des","tema");
+//        LibroCQRS ld = new LibroCQRS();
+//        try {
+//            ld.actualizarLibro(l);
+//        } catch (Exception ex) {
+//            Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
     
      public static void probarActualizarU() {
 

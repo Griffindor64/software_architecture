@@ -47,6 +47,7 @@ public class UsuarioREST {
                         .setIssuedAt(new Date(fecha))
                         .setExpiration(new Date(fecha + 900000))
                         .claim("nombreUsu", usuario.getNombreUsuario())
+                        .claim("rol", usuario.getRol())
                         .compact();
 
                 JsonObject js = Json.createObjectBuilder().add("JWT", token).build();
@@ -133,7 +134,7 @@ public class UsuarioREST {
         try {
             UsuarioController objUsuC = new UsuarioController();
             Gson gs = new Gson();
-            Usuario objUsuario = new Usuario(Integer.valueOf(id),nombres, apellidos, nombreUsuario, contrasennia, Integer.valueOf(rol));
+            Usuario objUsuario = new Usuario(Integer.valueOf(id), nombres, apellidos, nombreUsuario, contrasennia, Integer.valueOf(rol));
             if (objUsuC.actualizarUsuario(objUsuario)) {
                 out = "{\"result\":\"La actualización resultó exitosa\"}";
             } else {
