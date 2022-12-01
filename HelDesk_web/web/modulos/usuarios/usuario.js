@@ -1,7 +1,21 @@
 let alumnos = null;
 
+function cargarSeccion(opcion) {
+    if(opcion){
+        $('#seccionAlumnos').show();
+        $('#seccionAdmin').hide();
+        cargarUsuAlumnos();
+    }else{
+        $('#seccionAdmin').show();
+        $('#seccionAlumnos').hide();
+        cargarUsuAdministradores();
+    }
+};
+
 const cargarUsuAlumnos = () =>
         {
+            $('#btnActualizarAlum').hide();
+            $('#btnInsertarAlum').show();
             
             let data = {
                 "rol": "2"
@@ -28,11 +42,11 @@ const cargarUsuAlumnos = () =>
                         contenido += "<td>" + alumnos[i].nombres + "</td>";
                         contenido += "<td>" + alumnos[i].apellidos + "</td>";
                         contenido += "<td>" + alumnos[i].nombreUsuario + "</td>";
-                        contenido += "<td> <button class='btn btn-outline-danger' onclick='eliminarLibro(" + i + ");'><i class='fa fa-trash'></i></button> </td>";
-                        contenido += "<td> <button class='btn btn-outline-primary' onclick='mostrarLibro(" + i + ")'><i class='fa fa-pencil-alt'></i></button> </td>";
+                        contenido += "<td> <button class='btn btn-outline-danger' onclick='eliminarUsuario(" + i + ");'><i class='fa fa-trash'></i></button>&nbsp" 
+                                        + "<button class='btn btn-outline-primary' onclick='mostrarUsuario(" + i + ")'><i class='fa fa-pencil-alt'></i></button> </td>";
                         contenido += "</tr>";
                     }
-                    $("#tbodyLibro").html(contenido);
+                    $("#tbodyAlumnos").html(contenido);
                 }
             }
             );
@@ -40,6 +54,9 @@ const cargarUsuAlumnos = () =>
         
 const cargarUsuAdministradores = () =>
         {
+            $('#btnActualizarAdmin').hide();
+            $('#btnInsertarAdmin').show();
+            
             let data = {
                 "rol": "1"
                 
@@ -66,14 +83,28 @@ const cargarUsuAdministradores = () =>
                         contenido += "<td>" + alumnos[i].nombres + "</td>";
                         contenido += "<td>" + alumnos[i].apellidos + "</td>";
                         contenido += "<td>" + alumnos[i].nombreUsuario + "</td>";
-                        contenido += "<td> <button class='btn btn-outline-danger' onclick='eliminarLibro(" + i + ");'><i class='fa fa-trash'></i></button> </td>";
-                        contenido += "<td> <button class='btn btn-outline-primary' onclick='mostrarLibro(" + i + ")'><i class='fa fa-pencil-alt'></i></button> </td>";
+                        contenido += "<td> <button class='btn btn-outline-danger' onclick='eliminarUsuario(" + i + ");'><i class='fa fa-trash'></i></button>&nbsp" +
+                                          "<button class='btn btn-outline-primary' onclick='mostrarUsuario(" + i + ")'><i class='fa fa-pencil-alt'></i></button> </td>";
                         contenido += "</tr>";
                     }
-                    $("#tbodyLibro").html(contenido);
+                    $("#tbodyAdmin").html(contenido);
                 }
             }
             );
+        };
+        
+const mostrarUsuario = (i) =>
+        {
+            $('#txtIdU').val(alumnos[i].id);
+            $('#txtNombres').val(alumnos[i].nombres);
+            $('#txtApellidos').val(alumnos[i].apellidos);
+            $('#txtNUsuario').val(alumnos[i].nombreUsuario);
+            $('#txtContrasennia').val(alumnos[i].contrasennia);
+            $('#txtRolU').val(alumnos[i].rol);
+            $("#btnActualizarAlum").show();
+            $("#btnActualizarAdmin").show();
+            $("#btnInsertarAlum").hide();
+            $("#btnInsertarAdmin").hide();
         };
 
 const registrarUsuario = () =>
@@ -114,6 +145,40 @@ const registrarUsuario = () =>
             });
         }
     }
+};
+
+const actualizarUsuario = () =>
+{
+    let id = $('#txtIdU').val();
+    let nombres = $('#txtNombres').val();
+    let apellidos = $('#txtApellidos').val();
+    let nombreUsuario = $('#txtNUsuario').val();
+    let contrasennia = $('#txtContrasennia').val();
+    let rol = $('#txtRolU').val();
+    let usuario = {"id": id, "nombres": nombres, "apellidos": apellidos, "nombreUsuario": nombreUsuario, "contrasennia": contrasennia, "rol": rol};
+
+    let data = {"usuario": JSON.stringify(usuario)};
+
+    $.ajax(
+            {
+                "url": "api/user/update",
+                "type": "POST",
+                "async": true,
+                "data": data
+            }
+    ).done((data) =>
+    {
+        if (data.result != null)
+        {
+            alert("Modificación exitosa");
+            cargarLibros();
+        } else if (data.error !== null)
+        {
+            alert("Error");
+        }
+        limpiar();
+    }
+    );
 };
 
 const validarNombre =() =>

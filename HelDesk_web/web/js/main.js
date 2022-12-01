@@ -20,5 +20,6 @@ function moduloUsuarios()
     {
         $("#contenedor").html(data);
         cargarUsuAlumnos();
+        $('#seccionAdmin').hide();
     });
 }

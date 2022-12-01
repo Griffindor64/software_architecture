@@ -10,7 +10,7 @@ const cargarLibros = () =>
             $("#btnInsertarOtro").hide();
             $.ajax(
                     {
-                        "url": "../api/book/getAll",
+                        "url": "api/book/getAll",
                         "type": "GET",
                         "async": true
                     }
@@ -41,7 +41,7 @@ const cargarOtrosLibros = () =>
         {
             $.ajax(
                     {
-                        "url": "../api/book/getAllO",
+                        "url": "api/book/getAllO",
                         "type": "GET",
                         "async": true
                     }
@@ -85,7 +85,7 @@ const insertarLibro = () =>
     };
     $.ajax(
             {
-                "url": "../api/book/insert",
+                "url": "api/book/insert",
                 "type": "GET",
                 "async": true,
                 "data": data
@@ -113,7 +113,7 @@ const insertarOtroLibro = () =>
     };
     $.ajax(
             {
-                "url": "../api/book/insertO",
+                "url": "api/book/insertO",
                 "type": "GET",
                 "async": true,
                 "data": data
@@ -176,7 +176,7 @@ const actualizarOtroLibro = () =>
     let data = {"libro": JSON.stringify(libro)};
     $.ajax(
             {
-                "url": "../api/book/updateO",
+                "url": "api/book/updateO",
                 "type": "GET",
                 "async": true,
                 "data": data
@@ -227,7 +227,7 @@ const eliminarLibro = (i) =>
             var data = {"id": libros[i].id};
             $.ajax(
                     {
-                        "url": "../api/book/delete",
+                        "url": "api/book/delete",
                         "type": "GET",
                         "async": true,
                         "data": data

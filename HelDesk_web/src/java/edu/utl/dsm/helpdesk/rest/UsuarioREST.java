@@ -123,18 +123,13 @@ public class UsuarioREST {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(
-            @FormParam("id") @DefaultValue("") String id,
-            @FormParam("nombres") @DefaultValue("") String nombres,
-            @FormParam("apellidos") @DefaultValue("") String apellidos,
-            @FormParam("nombreUsuario") @DefaultValue("") String nombreUsuario,
-            @FormParam("contrasennia") @DefaultValue("") String contrasennia,
-            @FormParam("rol") @DefaultValue("") String rol) {
+            @FormParam("usuario") @DefaultValue("") String usuario) {
 
         String out = "";
         try {
             UsuarioController objUsuC = new UsuarioController();
             Gson gs = new Gson();
-            Usuario objUsuario = new Usuario(Integer.valueOf(id), nombres, apellidos, nombreUsuario, contrasennia, Integer.valueOf(rol));
+            Usuario objUsuario = gs.fromJson(usuario, Usuario.class);
             if (objUsuC.actualizarUsuario(objUsuario)) {
                 out = "{\"result\":\"La actualización resultó exitosa\"}";
             } else {
