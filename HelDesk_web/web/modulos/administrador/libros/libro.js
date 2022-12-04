@@ -1,6 +1,22 @@
 let libros = null;
-let usuario = sessionStorage.getItem("usuario");
-let token = sessionStorage.getItem("token");
+let usuario = null;
+let token = null;
+
+const generarToken = () => {
+    $.ajax(
+            {
+                "url": "api/book/token",
+                "type": "POST",
+                "async": true
+            }
+    ).done(data =>
+    {
+        sessionStorage.setItem("token", JSON.stringify(data));
+        token = sessionStorage.getItem("token");
+    });
+
+
+}
 
 const cargarLibros = () =>
         {
@@ -42,7 +58,9 @@ const insertarLibro = () =>
     let nombre = document.getElementById('txtNombre').value;
     let descripcion = document.getElementById('txtDescripcion').value;
     let tema = document.getElementById('txtTema').value;
-    
+    usuario = token = sessionStorage.getItem("usuario");
+    token = sessionStorage.getItem("token");
+
     let data = {
         "nombre": nombre,
         "descripcion": descripcion,
@@ -74,6 +92,8 @@ const actualizarLibro = () =>
     let descripcion = $("#txtDescripcion").val();
     let nombre = $("#txtNombre").val();
     let tema = $("#txtTema").val();
+    usuario = token = sessionStorage.getItem("usuario");
+    token = sessionStorage.getItem("token");
     let libro = {"id": id, "descripcion": descripcion, "nombre": nombre, "tema": tema, "usuario": usuario};
     let data = {
         "libro": JSON.stringify(libro),
