@@ -3,7 +3,19 @@ function moduloLibros()
 {
     $.ajax({
         context: document.body,
-        url: "modulos/libros/libro.html"
+        url: "modulos/administrador/libros/libro.html"
+    }).done(function (data)
+    {
+        $("#contenedor").html(data);
+        cargarLibros();
+    });
+}
+
+function moduloPerfil()
+{
+    $.ajax({
+        context: document.body,
+        url: "modulos/administrador/perfil/miPerfil.html"
     }).done(function (data)
     {
         $("#contenedor").html(data);
@@ -15,7 +27,7 @@ function moduloUsuarios()
 {
     $.ajax({
         context: document.body,
-        url: "modulos/usuarios/usuario.html"
+        url: "modulos/administrador/usuarios/usuario.html"
     }).done(function (data)
     {
         $("#contenedor").html(data);
