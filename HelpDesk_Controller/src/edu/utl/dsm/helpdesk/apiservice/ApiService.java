@@ -1,62 +1,179 @@
 package edu.utl.dsm.helpdesk.apiservice;
 
+import edu.utl.dsm.helpdesk.model.Libro;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ApiService {
-    public StringBuilder librosCentralizados() throws Exception{
-    //URL ruta = new URL("http://10.16.15.19:8084/HelDesk_web/api/book/getAllPublic");
-    URL ruta = new URL("http://192.168.116.74:8084/HelDesk_web/api/book/getAllPublic");
-    //URL ruta = new URL("http://192.168.100.43:8084/HelDesk_web/api/book/getAllPublic");
-        HttpURLConnection conn = (HttpURLConnection) ruta.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setDoInput(true);
-        StringBuilder response = new StringBuilder();
-        try (BufferedReader input = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-            String cadena;
-            while ((cadena = input.readLine()) != null) {
-                response.append(cadena);
+
+    public String getToken() throws MalformedURLException, ProtocolException, UnsupportedEncodingException, IOException {
+        URL url = new URL("http://192.168.100.43:3000/api/token");
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put("usuario", "eduardo");
+        params.put("contrasena", "123");
+
+        StringBuilder postData = new StringBuilder();
+        for (Map.Entry<String, Object> param : params.entrySet()) {
+            if (postData.length() != 0) {
+                postData.append('&');
             }
+            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+            postData.append('=');
+            postData.append(URLEncoder.encode(String.valueOf(param.getValue()),
+                    "UTF-8"));
         }
-        return response;
-    }
-    
-    public StringBuilder insertarOtros(String nombre, String descripcion, String tema) throws Exception{
-    //URL ruta = new URL("http://10.16.15.19:8084/HelDesk_web/api/book/getAllPublic");
-    URL ruta = new URL("http://192.168.116.74:8084/HelDesk_web/api/book/insertPublic?"
-            +"nombreL="+nombre+"&descripcionL="+descripcion+"&temaL="+tema);
-    //URL ruta = new URL("http://192.168.100.43:8084/HelDesk_web/api/book/getAllPublic");
-        HttpURLConnection conn = (HttpURLConnection) ruta.openConnection();
-        conn.setRequestMethod("GET");
+        System.out.println(postData.toString());
+        byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("accept", "*/*");
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+        conn.setDoOutput(true);
         conn.setDoInput(true);
+        conn.getOutputStream().write(postDataBytes);
+        Reader in = new BufferedReader(new InputStreamReader(
+                conn.getInputStream(), "UTF-8"));
         StringBuilder response = new StringBuilder();
-        try (BufferedReader input = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-            String cadena;
-            while ((cadena = input.readLine()) != null) {
-                response.append(cadena);
-            }
+        String line;
+
+        BufferedReader inn = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        while ((line = inn.readLine()) != null) {
+            response.append(line);
         }
-        return response;
+
+        return response.toString();
     }
-    
-    public StringBuilder actualizarOtros(String libro) throws Exception{
-    //URL ruta = new URL("http://10.16.15.19:8084/HelDesk_web/api/book/getAllPublic");
-    URL ruta = new URL("http://192.168.116.74:8084/HelDesk_web/api/book/updatePublic?"
-            +"libro=" + libro);
-    //URL ruta = new URL("http://192.168.100.43:8084/HelDesk_web/api/book/getAllPublic");
-        HttpURLConnection conn = (HttpURLConnection) ruta.openConnection();
-        conn.setRequestMethod("GET");
+
+    public String guardarLibroCentralizado(Libro libro, String token) throws MalformedURLException, ProtocolException, UnsupportedEncodingException, IOException {
+        URL url = new URL("http://192.168.100.43:3000/api/registrar-libro");
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put("libro_id", libro.getId());
+        params.put("libro_nombre", libro.getNombre());
+        params.put("tema", libro.getTema());
+        StringBuilder postData = new StringBuilder();
+        for (Map.Entry<String, Object> param : params.entrySet()) {
+            if (postData.length() != 0) {
+                postData.append('&');
+            }
+            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+            postData.append('=');
+            postData.append(URLEncoder.encode(String.valueOf(param.getValue()),
+                    "UTF-8"));
+        }
+        System.out.println(postData.toString());
+        byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("accept", "*/*");
+        conn.setRequestProperty("Authorization", token);
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+        conn.setDoOutput(true);
         conn.setDoInput(true);
+        conn.getOutputStream().write(postDataBytes);
+        Reader in = new BufferedReader(new InputStreamReader(
+                conn.getInputStream(), "UTF-8"));
         StringBuilder response = new StringBuilder();
-        try (BufferedReader input = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-            String cadena;
-            while ((cadena = input.readLine()) != null) {
-                response.append(cadena);
-            }
+        String line;
+
+        BufferedReader inn = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        while ((line = inn.readLine()) != null) {
+            response.append(line);
         }
-        return response;
+
+        return response.toString();
     }
+
+    public String buscar(String filtro, String token) throws MalformedURLException, ProtocolException, UnsupportedEncodingException, IOException {
+        URL url = new URL("http://192.168.100.43:3000/api/buscar-libro");
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put("filtro", filtro);
+        StringBuilder postData = new StringBuilder();
+        for (Map.Entry<String, Object> param : params.entrySet()) {
+            if (postData.length() != 0) {
+                postData.append('&');
+            }
+            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+            postData.append('=');
+            postData.append(URLEncoder.encode(String.valueOf(param.getValue()),
+                    "UTF-8"));
+        }
+        System.out.println(postData.toString());
+        byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("accept", "*/*");
+        conn.setRequestProperty("Authorization", token);
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+        conn.setDoOutput(true);
+        conn.setDoInput(true);
+        conn.getOutputStream().write(postDataBytes);
+        Reader in = new BufferedReader(new InputStreamReader(
+                conn.getInputStream(), "UTF-8"));
+        StringBuilder response = new StringBuilder();
+        String line;
+
+        BufferedReader inn = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        while ((line = inn.readLine()) != null) {
+            response.append(line);
+        }
+
+        return response.toString();
+    }
+
+    public String obtenerLibro(String universidad_libro_id, String universidad_id, String token) throws MalformedURLException, ProtocolException, UnsupportedEncodingException, IOException {
+        URL url = new URL("http://192.168.100.43:3000/api/recuperar-libro");
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put("universidad_libro_id", universidad_libro_id);
+        params.put("universidad_id", universidad_id);
+        StringBuilder postData = new StringBuilder();
+        for (Map.Entry<String, Object> param : params.entrySet()) {
+            if (postData.length() != 0) {
+                postData.append('&');
+            }
+            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+            postData.append('=');
+            postData.append(URLEncoder.encode(String.valueOf(param.getValue()),
+                    "UTF-8"));
+        }
+        System.out.println(postData.toString());
+        byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("accept", "*/*");
+        conn.setRequestProperty("Authorization", token);
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+        conn.setDoOutput(true);
+        conn.setDoInput(true);
+        conn.getOutputStream().write(postDataBytes);
+        Reader in = new BufferedReader(new InputStreamReader(
+                conn.getInputStream(), "UTF-8"));
+        StringBuilder response = new StringBuilder();
+        String line;
+
+        BufferedReader inn = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        while ((line = inn.readLine()) != null) {
+            response.append(line);
+        }
+
+        return response.toString();
+    }
+
 }

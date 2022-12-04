@@ -39,20 +39,20 @@ public class UsuarioREST {
                         + "Vuelve a intentarlo, o llama al administrador del sistema\"}";
                 return Response.status(Response.Status.UNAUTHORIZED).build();
             } else {
-                String key = "libros";
-                long fecha = System.currentTimeMillis();
-                String token = Jwts.builder()
-                        .signWith(SignatureAlgorithm.HS256, key)
-                        .setSubject(usuario.getNombreUsuario())
-                        .setIssuedAt(new Date(fecha))
-                        .setExpiration(new Date(fecha + 900000))
-                        .claim("nombreUsu", usuario.getNombreUsuario())
-                        .claim("rol", usuario.getRol())
-                        .compact();
-
-                JsonObject js = Json.createObjectBuilder().add("JWT", token).build();
+//                String key = "libros";
+//                long fecha = System.currentTimeMillis();
+//                String token = Jwts.builder()
+//                        .signWith(SignatureAlgorithm.HS256, key)
+//                        .setSubject(usuario.getNombreUsuario())
+//                        .setIssuedAt(new Date(fecha))
+//                        .setExpiration(new Date(fecha + 900000))
+//                        .claim("nombreUsu", usuario.getNombreUsuario())
+//                        .claim("rol", usuario.getRol())
+//                        .compact();
+//
+//                JsonObject js = Json.createObjectBuilder().add("JWT", token).build();
                 Gson gs = new Gson();
-                out = gs.toJson(js);
+                out = gs.toJson(usuario);
                 return Response.status(Response.Status.CREATED).entity(out).build();
             }
         } catch (Exception ex) {
@@ -123,13 +123,18 @@ public class UsuarioREST {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(
-            @FormParam("usuario") @DefaultValue("") String usuario) {
+            @FormParam("id") @DefaultValue("") String id,
+            @FormParam("nombres") @DefaultValue("") String nombres,
+            @FormParam("apellidos") @DefaultValue("") String apellidos,
+            @FormParam("nombreUsuario") @DefaultValue("") String nombreUsuario,
+            @FormParam("contrasennia") @DefaultValue("") String contrasennia,
+            @FormParam("rol") @DefaultValue("") String rol) {
 
         String out = "";
         try {
             UsuarioController objUsuC = new UsuarioController();
             Gson gs = new Gson();
-            Usuario objUsuario = gs.fromJson(usuario, Usuario.class);
+            Usuario objUsuario = new Usuario(Integer.valueOf(id), nombres, apellidos, nombreUsuario, contrasennia, Integer.valueOf(rol));
             if (objUsuC.actualizarUsuario(objUsuario)) {
                 out = "{\"result\":\"La actualización resultó exitosa\"}";
             } else {
@@ -168,6 +173,7 @@ public class UsuarioREST {
 
     }
 
+    
     @Path("getAll")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -183,7 +189,7 @@ public class UsuarioREST {
             out = objGS.toJson(usuarios);
         } catch (Exception ex) {
             ex.printStackTrace();
-            out = "{\"error\":\"Hubo un error al cargar los libros"
+            out = "{\"error\":\"Hubo un error al cargar los usuarios"
                     + " vuelve a intentarlo o llama al administrador del sistema\"}";
         }
         return Response.status(Response.Status.OK).entity(out).build();
