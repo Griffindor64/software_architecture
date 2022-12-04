@@ -1,4 +1,6 @@
 let libros = null;
+let usuario = sessionStorage.getItem("usuario");
+let token = sessionStorage.getItem("token");
 
 const cargarLibros = () =>
         {
@@ -37,13 +39,16 @@ const cargarLibros = () =>
 
 const insertarLibro = () =>
 {
-    const nombre = document.getElementById('txtNombre').value;
-    const descripcion = document.getElementById('txtDescripcion').value;
-    const tema = document.getElementById('txtTema').value;
+    let nombre = document.getElementById('txtNombre').value;
+    let descripcion = document.getElementById('txtDescripcion').value;
+    let tema = document.getElementById('txtTema').value;
+    
     let data = {
         "nombre": nombre,
         "descripcion": descripcion,
-        "tema": tema
+        "tema": tema,
+        "usuario": usuario,
+        "token": token
     };
     $.ajax(
             {
@@ -66,13 +71,14 @@ const insertarLibro = () =>
 const actualizarLibro = () =>
 {
     let id = $("#txtId").val();
-    alert($("#txtId").val());
     let descripcion = $("#txtDescripcion").val();
     let nombre = $("#txtNombre").val();
     let tema = $("#txtTema").val();
-    let libro = {"id": id, "descripcion": descripcion, "nombre": nombre, "tema": tema};
-
-    let data = {"libro": JSON.stringify(libro)};
+    let libro = {"id": id, "descripcion": descripcion, "nombre": nombre, "tema": tema, "usuario": usuario};
+    let data = {
+        "libro": JSON.stringify(libro),
+        "token": token
+    };
 
     $.ajax(
             {
