@@ -27,44 +27,7 @@ const cargarLibros = () =>
                         contenido += "<td>" + libros[i].nombre + "</td>";
                         contenido += "<td>" + libros[i].descripcion + "</td>";
                         contenido += "<td>" + libros[i].tema + "</td>";
-                        contenido += "<td> <button class='btn btn-outline-danger' onclick='eliminarLibro(" + i + ");'><i class='fa fa-trash'></i></button> </td>";
                         contenido += "<td> <button class='btn btn-outline-primary' onclick='mostrarLibro(" + i + ")'><i class='fa fa-pencil-alt'></i></button> </td>";
-                        contenido += "</tr>";
-                    }
-                    $("#tbodyLibro").html(contenido);
-                }
-            }
-            );
-        };
-
-const cargarOtrosLibros = () =>
-        {
-            $.ajax(
-                    {
-                        "url": "api/book/getAllO",
-                        "type": "POST",
-                        "async": true
-                    }
-            ).done((data) =>
-            {
-                if (data.error != null) {
-                    alert(data.error);
-                } else {
-                    $("#btnConsultar").hide();
-                    $("#btnInsertarOtro").show();
-                    $("#btnInsertar").hide();
-                    $("#btnVolver").show();
-                    $("#btnActualizarOtro").hide();
-                    otroslibros = data;
-                    let contenido = "";
-                    for (let i = 0; i < otroslibros.length; i++)
-                    {
-                        contenido += "<tr>";
-//                contenido += "<td>" + libros[i].nombre_lbr + "</td>";
-                        contenido += "<td>" + otroslibros[i].libro_nombre + "</td>";
-                        contenido += "<td>" + otroslibros[i].libro_descripcion + "</td>";
-                        contenido += "<td>" + otroslibros[i].libro_tema + "</td>";
-                        contenido += "<td> <button class='btn btn-outline-primary' onclick='mostrarOtroLibro(" + i + ")'><i class='fa fa-pencil-alt'></i></button> </td>";
                         contenido += "</tr>";
                     }
                     $("#tbodyLibro").html(contenido);
@@ -145,8 +108,6 @@ const mostrarLibro = (i) =>
 
 
         };
-
-
 
 const limpiar = () =>
 {
