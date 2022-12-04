@@ -15,6 +15,13 @@ public class LibroController {
         return libros;
     }
     
+    public List<Libro> consultarLibros(String filtro) throws Exception {
+        LibroAppServicies objLibAS = new LibroAppServicies();
+        List<Libro> libros = new ArrayList<>();
+        libros = objLibAS.consultarLibros(filtro);
+        return libros;
+    }
+    
     public List<LibroViewModel> mostrarLibrosPublic() throws Exception {
         LibroAppServicies objLibAS = new LibroAppServicies();
         List<LibroViewModel> libros = new ArrayList<>();

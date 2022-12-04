@@ -18,6 +18,13 @@ public class LibroAppServicies {
         return libros;
     }
      
+    public List<Libro> consultarLibros(String filtro) throws Exception {
+        LibroConsultasDAO objLibDAO = new LibroConsultasDAO();
+        List<Libro> libros = new ArrayList<>();
+        libros = objLibDAO.consultarLibros(filtro);
+        return libros;
+    }
+     
     public List<LibroViewModel> getAlllibrosPublic() throws Exception {
         LibroConsultasDAO objLibDAO = new LibroConsultasDAO();
         List<Libro> libros = new ArrayList<>();
