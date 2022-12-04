@@ -1,5 +1,4 @@
 let libros = null;
-let otroslibros = null;
 
 const cargarLibros = () =>
         {
@@ -14,7 +13,7 @@ const cargarLibros = () =>
                         "type": "POST",
                         "async": true
                     }
-            ).done((data) =>
+            ).done(data =>
             {
                 if (data.error != null) {
                     alert(data.error);
@@ -53,7 +52,7 @@ const insertarLibro = () =>
                 "async": true,
                 "data": data
             }
-    ).done((data) => {
+    ).done(data => {
         if (data.error != null) {
             alert("Error");
         } else {
@@ -82,7 +81,7 @@ const actualizarLibro = () =>
                 "async": true,
                 "data": data
             }
-    ).done((data) =>
+    ).done(data =>
     {
         if (data.result != null)
         {
