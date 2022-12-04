@@ -23,6 +23,11 @@ function moduloPerfil()
     });
 }
 
+function moduloLogin()
+{
+    window.location.replace("index.html");
+}
+
 function moduloUsuarios()
 {
     $.ajax({
