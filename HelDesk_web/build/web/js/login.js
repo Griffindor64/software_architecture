@@ -26,8 +26,7 @@ const loginUsuario = () =>
                     $("#error").html("Hubo un error verifica que los datos esten bien e intentalo de nuevo");
 
                 } else {
-                    console.log(JSON.stringify(data));
-                    alert(JSON.stringify(data.JWT.value));                    
+                    console.log(JSON.stringify(data));                 
                     window.location.replace("main.html");
                 }
             });

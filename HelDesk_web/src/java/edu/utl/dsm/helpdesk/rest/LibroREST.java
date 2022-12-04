@@ -58,28 +58,6 @@ public class LibroREST {
         return Response.status(Response.Status.OK).entity(out).build();
     }
 
-    @Path("delete")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(@FormParam("id") @DefaultValue("") String id) {
-        String out = "";
-        try {
-
-            LibroController objLibC = new LibroController();
-            if (objLibC.eliminarLibro(Integer.parseInt(id))) {
-                out = "{\"result\":\"Se ha eliminado correctamente el registro\"}";
-            } else {
-                out = "{\"error\":\"Ocurrió una falla , "
-                        + "Recuerda que el nlibro debe existir para poder eliminarlo\"}";
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            out = "{\"error\":\"Ocurrió una falla , "
-                    + "Vuelve a intentarlo, o llama al administrador del sistema\"}";
-        }
-        return Response.status(Response.Status.OK).entity(out).build();
-    }
-
     @Path("update")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
