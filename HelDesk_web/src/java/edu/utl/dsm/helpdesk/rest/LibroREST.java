@@ -37,8 +37,6 @@ public class LibroREST {
                 int id = objLibC.registrarLibro(l);
                 l.setId(id);
                 if (id != 0) {
-                    System.out.println(id);
-                    System.out.println(l.getId());
                     objAS.guardarLibroCentralizado(l, token);
                     out = String.valueOf(l.getId());
                 } else {
@@ -47,8 +45,8 @@ public class LibroREST {
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
-                out = "{\"error\":\"Ocurrió una falla , "
-                        + "Vuelve a intentarlo, o llama al administrador del sistema\"}";
+                out = "{\"error\":\""+token +
+                            "\"}";
             }
         } else {
             out = "{\"error\":\"El token no puede estar vacio "
@@ -152,7 +150,7 @@ public class LibroREST {
         String out = "";
         try {
             ApiService objApis = new ApiService();
-            out = objApis.getToken().toString();
+            out = objApis.getToken();
         } catch (Exception ex) {
             ex.printStackTrace();
             out = "{\"error\":\"Hubo un error al cargar los libros"
