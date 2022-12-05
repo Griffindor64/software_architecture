@@ -10,8 +10,8 @@ function moduloLibros()
     {
         $("#contenedor").html(data);
         cargarLibros();
-        nUsuario = "eduardo";
-        contrasenna = "123";
+        nUsuario = "20001468";
+        contrasenna = "20001468";
         generarToken();
     });
 }

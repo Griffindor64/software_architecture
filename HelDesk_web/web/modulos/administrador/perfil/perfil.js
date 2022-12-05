@@ -55,32 +55,37 @@ const actualizarte = () =>
 
 const actualizarUniversidad = () => {
 
-    let nUniversidad = document.getElementById('txtUniversidad');
-    let contrasenna = document.getElementById('nueva_contrasena');
-    let grupo = document.getElementById('txtGrupo');
-    let metodo = document.getElementById('txtMetodo');
-    let url = document.getElementById('txtURL');
-    token = sessionStorage.getItem("token");
+    let nUniversidad = $('#txtUniversidad').val();
+    contrasenna = $('#nueva_contrasena').val();
+    let grupo = $('#txtGrupo').val();
+    let metodo = $('#txtMetodo').val();
+    let url = $('#txtURL').val();
+    let tokenP = sessionStorage.getItem("token");
     let data = {
         "nombre_universidad": nUniversidad,
         "nueva_contrasena": contrasenna,
         "grupo": grupo,
         "metodo": metodo,
         "url": url,
-        "token": token
+        "token": tokenP
     };
+    
     $.ajax(
             {
-                "url": "api/book/token",
+                "url": "api/user/updateUni",
                 "type": "POST",
                 "async": true,
                 "data": data
             }
     ).done(data =>
     {
-
-        console.log(JSON.stringify(data));
-        let t = data.replace(/['"]+/g, '');
-        sessionStorage.setItem("token", t);
+        if (data.error == null)
+                {
+                    alert("Actualizacion exitosa");
+                } else if (data.error !== null)
+                {
+                    alert(data.error);
+                }
+        
     });
 };

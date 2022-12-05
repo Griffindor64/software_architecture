@@ -8,6 +8,7 @@ const generarToken = () => {
         "nUsuario": nUsuario,
         "contrasenna": contrasenna
     };
+    
     $.ajax(
             {
                 "url": "api/book/token",
@@ -17,9 +18,8 @@ const generarToken = () => {
             }
     ).done(data =>
     {
-        
         console.log(JSON.stringify(data));
-        let t = data.replace(/['"]+/g, '');
+        let t = JSON.stringify(data).replace(/['"]+/g, '');
         sessionStorage.setItem("token", t);
     });
 };
