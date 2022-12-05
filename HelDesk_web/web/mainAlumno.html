@@ -24,7 +24,7 @@ and open the template in the editor.
             }
         </style>
     </head>
-    <body>
+    <body onload="moduloLibrosA();">
         <header>
 
             <nav class="navbar-expand-lg  navbar navbar-light row" style="background-color: #e3f2fd;">
@@ -40,7 +40,7 @@ and open the template in the editor.
                         <div class='col-5 mb-3 row'>
                             <h2>
                                 <abbr onclick="moduloLogin();" title="Cerrar Sesión"><i style="color: #0275d8;" class="fas fa-sign-out-alt fa-1x mt-3 float-end"></i></abbr>
-                                <abbr onclick="moduloPerfil();" title="Mi Perfil"><i style="color: #0275d8;" class="far fa-user-circle fa-1x  mt-3 mx-4 float-end"></i></abbr> 
+                                <abbr onclick="moduloPerfilA();" title="Mi Perfil"><i style="color: #0275d8;" class="far fa-user-circle fa-1x  mt-3 mx-4 float-end"></i></abbr> 
                                 <abbr onclick="generarToken();" title="Regenerar token"><i style="color: #0275d8;" class="fas fa-key fa-1x  mt-3 float-end"></i></abbr> 
 
                             </h2>
@@ -55,6 +55,8 @@ and open the template in the editor.
         </div>
         <script src="style/font_awesome_5_15_3/js/all.js" type="text/javascript"></script>
         <script src="js/jquery/jquery-3.6.0.min.js" type="text/javascript"></script>
-
+        <script src="js/mainAlumno.js" type="text/javascript"></script>
+        <script src="modulos/alumnos/perfil/perfilAlumno.js" type="text/javascript"></script>
+        <script src="modulos/alumnos/libros/libro.js" type="text/javascript"></script>
     </body>
 </html>
