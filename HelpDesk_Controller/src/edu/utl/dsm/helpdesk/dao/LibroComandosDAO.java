@@ -12,7 +12,7 @@ public class LibroComandosDAO {
 
     public int registrarLibro(Libro b) throws Exception {
         //Se define la consulta a ejecutar
-        String query = "insert into libro (nombre, descripcion, tema, idUsuario) values (?,?,?,?);";
+        String query = "insert into libro (nombre, descripcion, tema, idUsuario, archivo) values (?,?,?,?,?);";
         int idGenerado = -1;
         //Generamos el objeto de la conexion
         ConexionMySQL connMySQL = new ConexionMySQL();
@@ -29,6 +29,7 @@ public class LibroComandosDAO {
         pstmt.setString(2, b.getDescripcion());
         pstmt.setString(3, b.getTema());
         pstmt.setInt(4, b.getUsuario().getId());
+        pstmt.setString(5, b.getArchivo());
         //Objeto de tipo user
         pstmt.executeUpdate();
 
@@ -49,8 +50,9 @@ public class LibroComandosDAO {
     public void actualizarLibro(Libro libro) throws Exception {
         //Se define la consulta a ejecutar
         String query = "update libro set nombre = '" + libro.getNombre() + "', "
-                + "descripcion = '" + libro.getDescripcion() + "' , tema = '" + libro.getTema() + "'"
-                + "   where id = " + libro.getId() + ";";
+                + "descripcion = '" + libro.getDescripcion() + "' , tema = '" + libro.getTema() + "', "
+                + "archivo = '" + libro.getNombre() + "'"
+                + " where id = " + libro.getId() + ";";
 
         //Generamos el objeto de la conexion
         ConexionMySQL connMySQL = new ConexionMySQL();

@@ -24,6 +24,7 @@ public class LibroREST {
     public Response insert(@FormParam("nombre") @DefaultValue("") String nombre,
             @FormParam("descripcion") @DefaultValue("") String descripcion,
             @FormParam("tema") @DefaultValue("") String tema,
+            @FormParam("archivo") @DefaultValue("") String archivo,
             @FormParam("usuario") @DefaultValue("") String usuario,
             @FormParam("token") @DefaultValue("") String token) {
         String out = "";
@@ -33,7 +34,7 @@ public class LibroREST {
                 ApiService objAS = new ApiService();
                 Gson gs = new Gson();
                 Usuario objU = gs.fromJson(usuario, Usuario.class);
-                Libro l = new Libro(nombre, descripcion, tema, objU);
+                Libro l = new Libro(nombre, descripcion, tema, objU, archivo);
                 int id = objLibC.registrarLibro(l);
                 l.setId(id);
                 if (id != 0) {
@@ -45,8 +46,8 @@ public class LibroREST {
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
-                out = "{\"error\":\""+token +
-                            "\"}";
+                out = "{\"error\":\"" + token
+                        + "\"}";
             }
         } else {
             out = "{\"error\":\"El token no puede estar vacio "
@@ -59,16 +60,23 @@ public class LibroREST {
     @Path("update")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response update(@FormParam("libro") @DefaultValue("") String libro,
+    public Response update(
+            @FormParam("id") @DefaultValue("") String id,
+            @FormParam("nombre") @DefaultValue("") String nombre,
+            @FormParam("descripcion") @DefaultValue("") String descripcion,
+            @FormParam("tema") @DefaultValue("") String tema,
+            @FormParam("archivo") @DefaultValue("") String archivo,
+            @FormParam("usuario") @DefaultValue("") String usuario,
             @FormParam("token") @DefaultValue("") String token) {
-
         String out = "";
         try {
             Gson objGS = new Gson();
-            Libro objLibro = objGS.fromJson(libro, Libro.class);
             LibroController objLibC = new LibroController();
-            if (objLibC.actualizarLibro(objLibro)) {
-                ApiService objAS = new ApiService();
+            ApiService objAS = new ApiService();
+            Gson gs = new Gson();
+            Usuario objU = gs.fromJson(usuario, Usuario.class);
+            Libro objLibro = new Libro(Integer.valueOf(id), nombre, descripcion, tema, objU, archivo);
+            if (objLibC.actualizarLibro(objLibro) && objLibro.getId() != 0) {
                 objAS.guardarLibroCentralizado(objLibro, token);
                 out = "{\"result\":\"La actualización del libro resultó exitosa\"}";
             } else {
@@ -176,14 +184,14 @@ public class LibroREST {
         }
         return Response.status(Response.Status.OK).entity(out).build();
     }
-    
+
     @Path("recuperar-libro")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response recuperarLibro(@FormParam("universidad_libro_id") @DefaultValue("") String universidad_libro_id) {
         String out = "";
         try {
-            
+
         } catch (Exception ex) {
             ex.printStackTrace();
             out = "{\"error\":\"Hubo un error al cargar los libros"
@@ -191,5 +199,5 @@ public class LibroREST {
         }
         return Response.status(Response.Status.OK).entity(out).build();
     }
-    
+
 }

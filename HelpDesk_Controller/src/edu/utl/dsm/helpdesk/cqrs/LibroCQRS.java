@@ -38,12 +38,8 @@ public class LibroCQRS {
     public Boolean actualizarLibro(Libro libro) throws Exception {
         LibroComandosDAO objLibDAO = new LibroComandosDAO();
         if(validarVacio(libro)){
-//            if (!validarNombreLibro(libro.getNombre())) {
                 objLibDAO.actualizarLibro(libro);
                 return true;
-//            } else {
-//                return false;
-//            }
         } else {
             return false;
         }

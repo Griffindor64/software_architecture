@@ -93,7 +93,7 @@ const insertarLibro = () =>
         "archivo": archivo,
         "usuario": usuario,
         "token": token
-    }
+    };
     alert(JSON.stringify(data));
     $.ajax(
             {
@@ -122,9 +122,13 @@ const actualizarLibro = () =>
     let tema = $("#txtTema").val();
     token = sessionStorage.getItem("token");
     usuario = sessionStorage.getItem("usuario");
-    let libro = {"id": id, "descripcion": descripcion, "nombre": nombre, "tema": tema, "archivo": archivo,"usuario": usuario};
     let data = {
-        "libro": JSON.stringify(libro),
+        "id": id,
+        "nombre": nombre,
+        "descripcion": descripcion,
+        "tema": tema,
+        "archivo": archivo,
+        "usuario": usuario,
         "token": token
     };
         alert(JSON.stringify(data));
