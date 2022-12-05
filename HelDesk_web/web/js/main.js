@@ -13,13 +13,14 @@ function moduloLibros()
 
 function moduloPerfil()
 {
+    
     $.ajax({
         context: document.body,
         url: "modulos/administrador/perfil/miPerfil.html"
     }).done(function (data)
     {
         $("#contenedor").html(data);
-        cargarLibros();
+        cargarAdministrador();
     });
 }
 
