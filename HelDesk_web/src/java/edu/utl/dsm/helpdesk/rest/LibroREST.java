@@ -1,12 +1,14 @@
 package edu.utl.dsm.helpdesk.rest;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import edu.utl.dsm.helpdesk.apiservice.ApiService;
 import edu.utl.dsm.helpdesk.controller.LibroController;
 import edu.utl.dsm.helpdesk.model.Libro;
 import edu.utl.dsm.helpdesk.model.Usuario;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -189,12 +191,19 @@ public class LibroREST {
     @Path("recuperar-libro")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response recuperarLibro(@FormParam("universidad_libro_id") @DefaultValue("") String universidad_libro_id) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response recuperarLibro(String universidad_libro_id) {
         String out = "";
         try {
-            System.out.println(universidad_libro_id);
+            universidad_libro_id = universidad_libro_id.substring(25, 27);
+            if (universidad_libro_id != null && universidad_libro_id.matches("[0-9]+")) {
+                universidad_libro_id = universidad_libro_id;
+            } else {
+                universidad_libro_id = String.valueOf(universidad_libro_id.charAt(0));
+            }
+            System.out.println(Integer.valueOf(universidad_libro_id));
             LibroController objLibC = new LibroController();
-            objLibC.recuperarLibro(1);
+            out = objLibC.recuperarLibro(Integer.valueOf(universidad_libro_id));
         } catch (Exception ex) {
             ex.printStackTrace();
             out = "{\"error\":\"Hubo un error al cargar los libros"
