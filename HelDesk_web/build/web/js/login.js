@@ -3,20 +3,6 @@ window.onload = function () {
     $("#error").hide();
 };
 
-const generarToken = () => {
-    $.ajax(
-            {
-                "url": "api/book/token",
-                "type": "POST",
-                "async": true
-            }
-    ).done(data =>
-    {
-        console.log(JSON.stringify(data));
-        sessionStorage.setItem("token", JSON.stringify(data));
-    });
-};
-
 const loginUsuario = () =>
 {
     var nombreUsuario = document.getElementById('txtNUsuario').value;
@@ -40,7 +26,6 @@ const loginUsuario = () =>
             $("#error").html("Hubo un error verifica que los datos esten bien e intentalo de nuevo");
 
         } else {
-            generarToken();
             sessionStorage.setItem("usuario", JSON.stringify(data));
                     
             if (data.rol == 1)
