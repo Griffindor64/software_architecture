@@ -3,6 +3,7 @@ package edu.utl.dsm.helpdesk.db;
 import edu.utl.dsm.helpdesk.controller.LibroController;
 import edu.utl.dsm.helpdesk.controller.UsuarioController;
 import edu.utl.dsm.helpdesk.cqrs.UsuarioCQRS;
+import edu.utl.dsm.helpdesk.dao.LibroConsultasDAO;
 import edu.utl.dsm.helpdesk.dao.UsuarioComandosDAO;
 import edu.utl.dsm.helpdesk.model.Usuario;
 
@@ -13,15 +14,7 @@ import java.util.logging.Logger;
 public class Prueba {
 
     public static void main(String[] args) throws Exception {
-        //probarCon();
-        //probarEliminarU();
-        //probarActualizarU();
-        //probarRegister();
-        //probarLogin();
-        probarGetAllUsuario();
-        probarEliminarU();
-//        probarActualizarU();
-//        probarRegister();
+        getLibro();
     }
 
     public static void probarLogin() {
@@ -29,6 +22,17 @@ public class Prueba {
         try {
             UsuarioController lg = new UsuarioController();
             System.out.println(lg.iniciarSesion("German", "1234"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+    
+    public static void getLibro() {
+
+        try {
+            LibroConsultasDAO lg = new LibroConsultasDAO();
+            System.out.println(lg.recuperarLibro(1));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
