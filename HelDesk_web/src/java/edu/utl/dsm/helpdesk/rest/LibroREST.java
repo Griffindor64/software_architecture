@@ -154,11 +154,12 @@ public class LibroREST {
     @Path("token")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response token() {
+    public Response token(@FormParam("nUsuario") @DefaultValue("") String nUsuario,
+            @FormParam("contrasenna") @DefaultValue("") String contrasenna) {
         String out = "";
         try {
             ApiService objApis = new ApiService();
-            out = objApis.getToken();
+            out = objApis.getToken(nUsuario, contrasenna);
         } catch (Exception ex) {
             ex.printStackTrace();
             out = "{\"error\":\"Hubo un error al cargar los libros"

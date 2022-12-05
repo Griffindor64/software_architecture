@@ -16,11 +16,11 @@ import java.util.Map;
 
 public class ApiService {
 
-    public String getToken() throws MalformedURLException, ProtocolException, UnsupportedEncodingException, IOException {
+    public String getToken(String nUsuario,String contrasenna ) throws MalformedURLException, ProtocolException, UnsupportedEncodingException, IOException {
         URL url = new URL("http://192.168.100.43:3000/api/token");
         Map<String, Object> params = new LinkedHashMap<>();
-        params.put("usuario", "eduardo");
-        params.put("contrasena", "123");
+        params.put("usuario", nUsuario);
+        params.put("contrasena", contrasenna);
 
         StringBuilder postData = new StringBuilder();
         for (Map.Entry<String, Object> param : params.entrySet()) {
@@ -176,4 +176,47 @@ public class ApiService {
         return response.toString();
     }
 
+    public String actualizarUni(String nueva_contrasena, String nombre_universidad, String grupo, String metodo, String url_recuperacion_libro, String token) throws MalformedURLException, ProtocolException, UnsupportedEncodingException, IOException {
+        URL url = new URL("http://192.168.100.43:3000/api/actualizar-perfil");
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put("nueva_contrasena", nueva_contrasena);
+        params.put("nombre_universidad", nombre_universidad);
+        params.put("grupo", grupo);
+        params.put("metodo", metodo);
+        params.put("url_recuperacion_libro", url_recuperacion_libro);
+
+        StringBuilder postData = new StringBuilder();
+        for (Map.Entry<String, Object> param : params.entrySet()) {
+            if (postData.length() != 0) {
+                postData.append('&');
+            }
+            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+            postData.append('=');
+            postData.append(URLEncoder.encode(String.valueOf(param.getValue()),
+                    "UTF-8"));
+        }
+        System.out.println(postData.toString());
+        byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("accept", "*/*");
+        conn.setRequestProperty("Authorization", token);
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+        conn.setDoOutput(true);
+        conn.setDoInput(true);
+        conn.getOutputStream().write(postDataBytes);
+        Reader in = new BufferedReader(new InputStreamReader(
+                conn.getInputStream(), "UTF-8"));
+        StringBuilder response = new StringBuilder();
+        String line;
+
+        BufferedReader inn = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        while ((line = inn.readLine()) != null) {
+            response.append(line);
+        }
+
+        return response.toString();
+    }
 }

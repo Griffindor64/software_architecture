@@ -3,19 +3,21 @@ let usuario = null;
 let token = null;
 let archivo = null;
 
-window.onload = function () {
-    generarToken();
-};
-
 const generarToken = () => {
+    let data = {
+        "nUsuario": nUsuario,
+        "contrasenna": contrasenna
+    };
     $.ajax(
             {
                 "url": "api/book/token",
                 "type": "POST",
-                "async": true
+                "async": true,
+                "data": data
             }
     ).done(data =>
     {
+        
         console.log(JSON.stringify(data));
         let t = data.replace(/['"]+/g, '');
         sessionStorage.setItem("token", t);

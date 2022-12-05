@@ -1,3 +1,5 @@
+let nUsuario;
+let contrasenna;
 
 function moduloLibros()
 {
@@ -8,6 +10,9 @@ function moduloLibros()
     {
         $("#contenedor").html(data);
         cargarLibros();
+        nUsuario = "eduardo";
+        contrasenna = "123";
+        generarToken();
     });
 }
 

@@ -1,6 +1,7 @@
 package edu.utl.dsm.helpdesk.rest;
 
 import com.google.gson.Gson;
+import edu.utl.dsm.helpdesk.apiservice.ApiService;
 import edu.utl.dsm.helpdesk.controller.UsuarioController;
 import edu.utl.dsm.helpdesk.model.Usuario;
 import java.util.ArrayList;
@@ -129,11 +130,11 @@ public class UsuarioREST {
         try {
             UsuarioController objUsuC = new UsuarioController();
             Gson gs = new Gson();
-            
-            System.out.println( "El id es"+id);
+
+            System.out.println("El id es" + id);
             Usuario objUsuario = new Usuario(
                     Integer.valueOf(id),
-                    nombres, apellidos, nombreUsuario, contrasennia, 
+                    nombres, apellidos, nombreUsuario, contrasennia,
                     Integer.valueOf(rol));
             if (objUsuC.actualizarUsuario(objUsuario)) {
                 out = "{\"result\":\"La actualización resultó exitosa\"}";
@@ -173,7 +174,6 @@ public class UsuarioREST {
 
     }
 
-    
     @Path("getAll")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -194,4 +194,26 @@ public class UsuarioREST {
         }
         return Response.status(Response.Status.OK).entity(out).build();
     }
+
+    @Path("updateUni")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateUni(@FormParam("nueva_contrasena") @DefaultValue("") String nueva_contrasena,
+            @FormParam("nombre_universidad") @DefaultValue("") String nombre_universidad,
+            @FormParam("grupo") @DefaultValue("") String grupo,
+            @FormParam("metodo") @DefaultValue("") String metodo,
+            @FormParam("url") @DefaultValue("") String url,
+            @FormParam("token") @DefaultValue("") String token) {
+        String out = "";
+        try {
+            ApiService objApis = new ApiService();
+            out = objApis.actualizarUni(nueva_contrasena, nombre_universidad, grupo, metodo, url, token);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            out = "{\"error\":\"Hubo un error al cargar los libros"
+                    + " vuelve a intentarlo o llama al administrador del sistema\"}";
+        }
+        return Response.status(Response.Status.OK).entity(out).build();
+    }
+
 }
