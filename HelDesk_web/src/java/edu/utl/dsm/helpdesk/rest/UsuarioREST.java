@@ -170,9 +170,9 @@ public class UsuarioREST {
 
     
     @Path("getAll")
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAll(@QueryParam("rol") @DefaultValue("") String rol) {
+    public Response getAll(@FormParam("rol") @DefaultValue("") String rol) {
 
         String out = "";
 

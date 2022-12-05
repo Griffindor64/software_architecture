@@ -65,11 +65,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="txtArchivo" class="form-label">Libro: </label>
-                                        <input type="file" id="txtArchivo" accept=".pdf" class="form-control"><br>
+                                        <input type="file" id="txtArchivo" accept=".pdf" class="form-control" onchange="convertirBase64();"><br>
                                     </div>
                                     <div class="form-group">
 
-                                        <button id="btnActualizar" type="button" onclick="generarToken();" class="btn btn-primary w-100 mb-3 mt-3">Actualizar Libro</button>
+                                        <button id="btnActualizar" type="button" onclick="actualizarLibro();" class="btn btn-primary w-100 mb-3 mt-3">Actualizar Libro</button>
                                         <button id="btnInsertar" type="button" onclick="insertarLibro();" class="btn btn-primary w-100 mb-3 mt-3">Agregar Libro</button>
                                          </div>
                                 </form>
