@@ -1,7 +1,6 @@
 package edu.utl.dsm.helpdesk.rest;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import edu.utl.dsm.helpdesk.apiservice.ApiService;
 import edu.utl.dsm.helpdesk.controller.LibroController;
 import edu.utl.dsm.helpdesk.model.Libro;
