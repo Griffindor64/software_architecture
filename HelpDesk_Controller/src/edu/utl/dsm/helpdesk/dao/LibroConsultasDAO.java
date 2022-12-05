@@ -84,4 +84,26 @@ public class LibroConsultasDAO {
         connMySQL.close();
         return libros;
     }
+    
+    public String recuperarLibro(int id_libro) throws Exception{
+            String query = "SELECT archivo FROM libro where id like "+id_libro+";";
+            String archivo = null;
+        //Generamos el objeto de la conexion
+        ConexionMySQL connMySQL = new ConexionMySQL();
+
+        Connection conn = connMySQL.open();
+
+        PreparedStatement pstmt = conn.prepareStatement(query);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        while (rs.next()) {
+            archivo = rs.getString("archivo");
+        }
+        //Cerramos las conexiones
+        rs.close();
+        pstmt.close();
+        connMySQL.close();
+        return archivo;
+    }
 }

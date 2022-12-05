@@ -22,6 +22,12 @@ public class LibroController {
         return libros;
     }
     
+    public String recuperarLibro(int id_libro) throws Exception {
+                LibroAppServicies objLibAS = new LibroAppServicies();
+        String archivo = objLibAS.recuperarLibro(id_libro);
+        return archivo;
+    }
+    
     public List<LibroViewModel> mostrarLibrosPublic() throws Exception {
         LibroAppServicies objLibAS = new LibroAppServicies();
         List<LibroViewModel> libros = new ArrayList<>();

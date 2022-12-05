@@ -192,7 +192,9 @@ public class LibroREST {
     public Response recuperarLibro(@FormParam("universidad_libro_id") @DefaultValue("") String universidad_libro_id) {
         String out = "";
         try {
-
+            System.out.println(universidad_libro_id);
+            LibroController objLibC = new LibroController();
+            objLibC.recuperarLibro(1);
         } catch (Exception ex) {
             ex.printStackTrace();
             out = "{\"error\":\"Hubo un error al cargar los libros"
