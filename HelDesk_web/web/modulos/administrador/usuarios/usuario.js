@@ -1,5 +1,6 @@
 let alumnos = null;
 
+
 function cargarSeccion(opcion) {
     if (opcion) {
         $('#seccionAlumnos').show();
@@ -15,7 +16,8 @@ function cargarSeccion(opcion) {
 
 const cargarUsuAlumnos = () =>
 {
-
+    $('#btnActualizarAlum').hide();
+    $('#btnInsertarAlum').show();
     let data = {
         "rol": "2"
     };
@@ -120,12 +122,20 @@ const mostrarAdministrador = (i) =>
     $("#btnInsertarAdmin").hide();
 };
 
-const registrarUsuario = () =>
+const registrarUsuario = (rol) =>
         {
-            let nombres = document.getElementById('txtNombres').value;
-            let apellidos = document.getElementById('txtApellidos').value;
-            let contrasennia = document.getElementById('txtContrasennia').value;
-            let nombreUsuario = document.getElementById('txtNUsuario').value;
+            let nombres, apellidos, contrasennia, nombreUsuario;
+            if (rol == 2) {
+                nombres = document.getElementById('txtNombres').value;
+                apellidos = document.getElementById('txtApellidos').value;
+                contrasennia = document.getElementById('txtContrasennia').value;
+                nombreUsuario = document.getElementById('txtNUsuario').value;
+            } else {
+                nombres = document.getElementById('txtNombresA').value;
+                apellidos = document.getElementById('txtApellidosA').value;
+                contrasennia = document.getElementById('txtContrasenniaA').value;
+                nombreUsuario = document.getElementById('txtNUsuarioA').value;
+            }
 
             if ($("#lblusuario").text() == " Usuario no válido") {
                 alert("El usuario ya esta en uso o es nulo ingrese otro");
@@ -138,7 +148,7 @@ const registrarUsuario = () =>
                         "apellidos": apellidos,
                         "nombreUsuario": nombreUsuario,
                         "contrasennia": contrasennia,
-                        "rol": 1
+                        "rol": rol
                     };
 
                     $.ajax(
@@ -148,30 +158,46 @@ const registrarUsuario = () =>
                                 "async": true,
                                 "data": data
                             }
-                    ).done(function (data) {
+                    ).done(data =>
+                    {
                         if (data.error != null) {
                             alert("Error");
                         } else {
                             alert("Usuario registrado con exito");
-                            limpiar();
+                            cargarUsuAlumnos();
+                            cargarUsuAdministradores();
+                            limpiarUsuario();
                         }
                     });
                 }
             }
         };
 
-const actualizarUsuario = () =>
+const actualizarUsuario = (rol) =>
         {
-            let id = $('#txtIdU').val();
-            let nombres = $('#txtNombres').val();
-            let apellidos = $('#txtApellidos').val();
-            let nombreUsuario = $('#txtNUsuario').val();
-            let contrasennia = $('#txtContrasennia').val();
-            let rol = $('#txtRolU').val();
-            let usuario = {"id": id, "nombres": nombres, "apellidos": apellidos, "nombreUsuario": nombreUsuario, "contrasennia": contrasennia, "rol": rol};
-
-            let data = {"usuario": JSON.stringify(usuario)};
-
+            let id, nombres, apellidos, contrasennia, nombreUsuario;
+            if (rol == 2) {
+                id = $('#txtIdU').val();
+                nombres = document.getElementById('txtNombres').value;
+                apellidos = document.getElementById('txtApellidos').value;
+                contrasennia = document.getElementById('txtContrasennia').value;
+                nombreUsuario = document.getElementById('txtNUsuario').value;
+            } else {
+                id = $('#txtIdA').val();
+                nombres = document.getElementById('txtNombresA').value;
+                apellidos = document.getElementById('txtApellidosA').value;
+                contrasennia = document.getElementById('txtContrasenniaA').value;
+                nombreUsuario = document.getElementById('txtNUsuarioA').value;
+            }
+            let data = {
+                "id": id,
+                "nombres": nombres,
+                "apellidos": apellidos,
+                "nombreUsuario": nombreUsuario,
+                "contrasennia": contrasennia,
+                "rol": rol
+            };
+            alert(JSON.stringify(data));
             $.ajax(
                     {
                         "url": "api/user/update",
@@ -179,32 +205,35 @@ const actualizarUsuario = () =>
                         "async": true,
                         "data": data
                     }
-            ).done((data) =>
+            ).done(data =>
             {
-                if (data.result != null)
+                if (data.error == null)
                 {
                     alert("Modificación exitosa");
-                    cargarLibros();
+                    cargarUsuAlumnos();
                 } else if (data.error !== null)
                 {
-                    alert("Error");
+                    alert(data.error);
                 }
-                limpiar();
+                limpiarUsuario();
             }
             );
         };
 
-const validarNombre = () =>
+const validarNombreU = (rol) =>
         {
-
-            let nombreUsuario = document.getElementById('txtNUsuario').value;
+            let nombreUsuario;
+            if (rol == 2) {
+                nombreUsuario = document.getElementById('txtNUsuario').value;
+            } else {
+                nombreUsuario = document.getElementById('txtNUsuarioA').value;
+            }
             if (nombreUsuario == null) {
                 alert("Nombre de usuario vacio");
             }
             let data = {
                 "nombreUsuario": nombreUsuario
             };
-
             $.ajax(
                     {
                         "url": "api/user/validateNameUser",
@@ -220,3 +249,24 @@ const validarNombre = () =>
                 }
             });
         };
+
+const limpiarUsuario = () => {
+    $('#txtIdU').val("");
+    $('#txtNombres').val("");
+    $('#txtApellidos').val("");
+    $('#txtNUsuario').val("");
+    $('#txtContrasennia').val("");
+    $('#txtRolU').val("");
+    $('#txtIdA').val("");
+    $('#txtNombresA').val("");
+    $('#txtApellidosA').val("");
+    $('#txtNUsuarioA').val("");
+    $('#txtContrasenniaA').val("");
+    $('#txtRolA').val("");
+    
+    $('#btnActualizarAlum').hide();
+    $('#btnInsertarAlum').show();
+    $('#btnActualizarAdmin').hide();
+    $('#btnInsertarAdmin').show();
+
+};

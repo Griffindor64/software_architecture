@@ -47,7 +47,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="txtNUsuario" class="form-label">Nombre Usuario: </label>
-                                                    <input type="text" id="txtNUsuario" class="form-control" onkeyup="validarNombre();"><br>
+                                                    <input type="text" id="txtNUsuario" class="form-control" onkeyup="validarNombre(2);"><br>
                                                 </div>
                                                 <div id ="divNombre"></div>
                                                 <div class="form-group">
@@ -59,10 +59,10 @@
                                                     <input type="text" id="txtRolU" class="form-control"><br>
                                                 </div>
                                                 <div class="form-group">
-                                                    <button id="btnInsertarAlum" type="button" onclick="registrarUsuario();"
+                                                    <button id="btnInsertarAlum" type="button" onclick="registrarUsuario(2);"
                                                         class="btn btn-primary w-100 mb-3 mt-3">Registrar</button>
-                                                    <button id="btnActualizarAlum" type="button" onclick="actualizarUsuario();"
-                                                            class="btn btn-primary w-100 mb-3 mt-3">Actualizar</button>
+                                                    <button id="btnActualizarAlum" type="button" onclick="actualizarUsuario(2);"
+                                                            class="btn btn-primary w-100 mb-3 mt-3" >Actualizar</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -128,7 +128,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="txtNUsuarioA" class="form-label">Nombre Usuario: </label>
-                                                    <input type="text" id="txtNUsuarioA" class="form-control" onkeyup="validarNombre();"><br>
+                                                    <input type="text" id="txtNUsuarioA" class="form-control" onkeyup="validarNombreU(1);"><br>
                                                 </div>
                                                 <div id ="divNombre"></div>
                                                 <div class="form-group">
@@ -140,9 +140,9 @@
                                                     <input type="text" id="txtRolA" class="form-control"><br>
                                                 </div>
                                                 <div class="form-group">
-                                                    <button id="btnInsertarAdmin" type="button" onclick="registrarUsuario();"
+                                                    <button id="btnInsertarAdmin" type="button" onclick="registrarUsuario(1);"
                                                         class="btn btn-primary w-100 mb-3 mt-3">Registrar</button>
-                                                    <button id="btnActualizarAdmin" type="button" onclick="actualizarUsuario();"
+                                                    <button id="btnActualizarAdmin" type="button" onclick="actualizarUsuario(1);"
                                                             class="btn btn-primary w-100 mb-3 mt-3">Actualizar</button>
                                                 </div>
                                             </form>

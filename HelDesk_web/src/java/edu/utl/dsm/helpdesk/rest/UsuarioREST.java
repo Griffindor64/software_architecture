@@ -129,7 +129,12 @@ public class UsuarioREST {
         try {
             UsuarioController objUsuC = new UsuarioController();
             Gson gs = new Gson();
-            Usuario objUsuario = new Usuario(Integer.valueOf(id), nombres, apellidos, nombreUsuario, contrasennia, Integer.valueOf(rol));
+            
+            System.out.println( "El id es"+id);
+            Usuario objUsuario = new Usuario(
+                    Integer.valueOf(id),
+                    nombres, apellidos, nombreUsuario, contrasennia, 
+                    Integer.valueOf(rol));
             if (objUsuC.actualizarUsuario(objUsuario)) {
                 out = "{\"result\":\"La actualización resultó exitosa\"}";
             } else {
