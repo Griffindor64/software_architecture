@@ -45,7 +45,7 @@ const cargarUsuAlumnos = () =>
                         contenido += "<td>" + alumnos[i].nombres + "</td>";
                         contenido += "<td>" + alumnos[i].apellidos + "</td>";
                         contenido += "<td>" + alumnos[i].nombreUsuario + "</td>";
-                        contenido += "<td> <button class='btn btn-outline-danger' onclick='eliminarUsuario(" + i + ");'><i class='fa fa-trash'></i></button>&nbsp"
+                        contenido += "<td> <button class='btn btn-outline-danger' onclick='eliminarUsuario(" + alumnos[i].id + ");'><i class='fa fa-trash'></i></button>&nbsp"
                                 + "<button class='btn btn-outline-primary' onclick='mostrarAlumno(" + i + ")'><i class='fa fa-pencil-alt'></i></button> </td>";
                         contenido += "</tr>";
                     }
@@ -88,7 +88,7 @@ const cargarUsuAdministradores = () =>
                         contenido += "<td>" + alumnos[i].nombres + "</td>";
                         contenido += "<td>" + alumnos[i].apellidos + "</td>";
                         contenido += "<td>" + alumnos[i].nombreUsuario + "</td>";
-                        contenido += "<td> <button class='btn btn-outline-danger' onclick='eliminarUsuario(" + i + ");'><i class='fa fa-trash'></i></button>&nbsp" +
+                        contenido += "<td> <button class='btn btn-outline-danger' onclick='eliminarUsuario(" + alumnos[i].id + ");'><i class='fa fa-trash'></i></button>&nbsp" +
                                 "<button class='btn btn-outline-primary' onclick='mostrarAdministrador(" + i + ")'><i class='fa fa-pencil-alt'></i></button> </td>";
                         contenido += "</tr>";
                     }
@@ -124,6 +124,31 @@ const mostrarAdministrador = (i) =>
             $("#btnActualizarAdmin").show();
             $("#btnInsertarAlum").hide();
             $("#btnInsertarAdmin").hide();
+        };
+
+const eliminarUsuario = (id) =>
+        {
+            let data = {
+                "id": id
+            };
+            $.ajax(
+                    {
+                        "url": "api/user/delete",
+                        "type": "POST",
+                        "async": true,
+                        "data": data
+                    }
+            ).done(data =>
+            {
+                if (data.error != null) {
+                    alert(data.error);
+                } else {
+                    alert("El alumno fue dado de baja con exito");
+                    cargarUsuAdministradores();
+                    cargarUsuAlumnos();
+                }
+            }
+            );
         };
 
 const registrarUsuario = (rol) =>
@@ -267,7 +292,6 @@ const limpiarUsuario = () => {
     $('#txtNUsuarioA').val("");
     $('#txtContrasenniaA').val("");
     $('#txtRolA').val("");
-
     $('#btnActualizarAlum').hide();
     $('#btnInsertarAlum').show();
     $('#btnActualizarAdmin').hide();
