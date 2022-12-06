@@ -8,7 +8,7 @@ const generarToken = () => {
         "nUsuario": nUsuario,
         "contrasenna": contrasenna
     };
-    
+
     $.ajax(
             {
                 "url": "api/book/token",
@@ -46,140 +46,144 @@ const convertirBase64 = () => {
 };
 
 const cargarLibros = () =>
-        {
-            $("#btnInsertar").show();
-            $("#btnActualizar").hide();
-            $("#btnActualizarOtro").hide();
-            $("#btnVolver").hide();
-            $("#btnInsertarOtro").hide();
-            $.ajax(
-                    {
-                        "url": "api/book/getAll",
-                        "type": "POST",
-                        "async": true
-                    }
-            ).done(data =>
-            {
-                if (data.error != null) {
-                    alert(data.error);
-                } else {
-                    libros = data;
-                    let contenido = "";
-                    for (let i = 0; i < libros.length; i++)
-                    {
-                        contenido += "<tr>";
-                        contenido += "<td>" + libros[i].nombre + "</td>";
-                        contenido += "<td>" + libros[i].descripcion + "</td>";
-                        contenido += "<td>" + libros[i].tema + "</td>";
-                        contenido += "<td> <button class='btn btn-outline-primary' onclick='mostrarLibro(" + i + ")'><i class='fa fa-pencil-alt'></i></button> </td>";
-                        contenido += "</tr>";
-                    }
-                    $("#tbodyLibro").html(contenido);
-                }
-            }
-            );
-        };
-
-const insertarLibro = () =>
 {
-    let nombre = document.getElementById('txtNombre').value;
-    let descripcion = document.getElementById('txtDescripcion').value;
-    let tema = document.getElementById('txtTema').value;
-    usuario = sessionStorage.getItem("usuario");
-    token = sessionStorage.getItem("token");
-    console.log(token);
-    let data = {
-        "nombre": nombre,
-        "descripcion": descripcion,
-        "tema": tema,
-        "archivo": archivo,
-        "usuario": usuario,
-        "token": token
-    };
-    alert(JSON.stringify(data));
+    $("#btnInsertar").show();
+    $("#btnActualizar").hide();
+    $("#btnActualizarOtro").hide();
+    $("#btnVolver").hide();
+    $("#btnInsertarOtro").hide();
     $.ajax(
             {
-                "url": "api/book/insert",
+                "url": "api/book/getAll",
                 "type": "POST",
-                "async": true,
-                "data": data
-            }
-    ).done(data => {
-        if (data.error != null) {
-            alert(data.error);
-        } else {
-            alert("libro agregado correctamente");
-            cargarLibros();
-        }
-        limpiar();
-    });
-};
-
-const actualizarLibro = () =>
-{
-
-    let id = $("#txtId").val();
-    let descripcion = $("#txtDescripcion").val();
-    let nombre = $("#txtNombre").val();
-    let tema = $("#txtTema").val();
-    token = sessionStorage.getItem("token");
-    usuario = sessionStorage.getItem("usuario");
-    let data = {
-        "id": id,
-        "nombre": nombre,
-        "descripcion": descripcion,
-        "tema": tema,
-        "archivo": archivo,
-        "usuario": usuario,
-        "token": token
-    };
-        alert(JSON.stringify(data));
-
-    $.ajax(
-            {
-                "url": "api/book/update",
-                "type": "POST",
-                "async": true,
-                "data": data
+                "async": true
             }
     ).done(data =>
     {
-        if (data.result != null)
-        {
-            alert("Modificación exitosa");
-            cargarLibros();
-        } else if (data.error !== null)
-        {
-            alert("Error");
+
+        if (data.error != null) {
+            alert(data.error);
+        } else {
+            libros = data;
+            let contenido = "";
+            for (let i = 0; i < libros.length; i++)
+            {
+                contenido += "<tr>";
+                contenido += "<td>" + libros[i].nombre + "</td>";
+                contenido += "<td>" + libros[i].descripcion + "</td>";
+                contenido += "<td>" + libros[i].tema + "</td>";
+                contenido += "<td> <button class='btn btn-outline-primary' onclick='mostrarLibro(" + i + ")'><i class='fa fa-pencil-alt'></i></button> </td>";
+                contenido += "</tr>";
+            }
+            $("#tbodyLibro").html(contenido);
         }
-        limpiar();
     }
     );
 };
 
-const mostrarLibro = (i) =>
+const insertarLibro = () =>
         {
-            $('#txtId').val(libros[i].id);
-            $('#txtNombre').val(libros[i].nombre);
-            $('#txtDescripcion').val(libros[i].descripcion);
-            $('#txtTema').val(libros[i].tema);
-            $("#btnActualizar").show();
-            $("#btnInsertar").hide();
-
-
+            let nombre = document.getElementById('txtNombre').value;
+            let descripcion = document.getElementById('txtDescripcion').value;
+            let tema = document.getElementById('txtTema').value;
+            usuario = sessionStorage.getItem("usuario");
+            token = sessionStorage.getItem("token");
+            console.log(token);
+            let data = {
+                "nombre": nombre,
+                "descripcion": descripcion,
+                "tema": tema,
+                "archivo": archivo,
+                "usuario": usuario,
+                "token": token
+            };
+            alert(JSON.stringify(data));
+            $.ajax(
+                    {
+                        "url": "api/book/insert",
+                        "type": "POST",
+                        "async": true,
+                        "data": data
+                    }
+            ).done(data => {
+                archivo = null;
+                if (data.error != null) {
+                    alert(data.error);
+                } else {
+                    alert("libro agregado correctamente");
+                    cargarLibros();
+                }
+                limpiar();
+            });
         };
 
-const limpiar = () =>
+const actualizarLibro = () =>
+        {
+
+            let id = $("#txtId").val();
+            let descripcion = $("#txtDescripcion").val();
+            let nombre = $("#txtNombre").val();
+            let tema = $("#txtTema").val();
+            token = sessionStorage.getItem("token");
+            usuario = sessionStorage.getItem("usuario");
+            let data = {
+                "id": id,
+                "nombre": nombre,
+                "descripcion": descripcion,
+                "tema": tema,
+                "archivo": archivo,
+                "usuario": usuario,
+                "token": token
+            };
+            alert(JSON.stringify(data));
+
+            $.ajax(
+                    {
+                        "url": "api/book/update",
+                        "type": "POST",
+                        "async": true,
+                        "data": data
+                    }
+            ).done(data =>
+            {
+                archivo = null;
+                if (data.result != null)
+                {
+                    alert("Modificación exitosa");
+                    cargarLibros();
+                } else if (data.error !== null)
+                {
+                    alert("Error");
+                    cargarLibros();
+                }
+                limpiar();
+            }
+            );
+        };
+
+const mostrarLibro = (i) =>
 {
-    $('#txtId').val("");
-    $('#txtNombre').val("");
-    $('#txtDescripcion').val("");
-    $('#txtTema').val("");
+    $('#txtId').val(libros[i].id);
+    $('#txtNombre').val(libros[i].nombre);
+    $('#txtDescripcion').val(libros[i].descripcion);
+    $('#txtTema').val(libros[i].tema);
+    $("#btnActualizar").show();
+    $("#pdfHolder").show();
+    $("#btnInsertar").hide();
+
+    var src = "data:application/pdf;base64,";
+    src += libros[i].archivo;
+    document.getElementById("pdfHolder").data = src;
 };
 
-const volver = () =>
-{
-    $("#btnConsultar").show();
-    cargarLibros();
-    limpiar();
-};
+const limpiar = () =>
+        {
+            $('#txtId').val("");
+            $('#txtNombre').val("");
+            $('#txtDescripcion').val("");
+            $('#txtTema').val("");
+            document.getElementById("pdfHolder").data = "";
+            $("#pdfHolder").hide();
+            $('#txtArchivo').val("");
+        };
+
