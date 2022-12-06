@@ -17,7 +17,8 @@ import java.util.Map;
 public class ApiService {
 
     public String getToken(String nUsuario,String contrasenna ) throws MalformedURLException, ProtocolException, UnsupportedEncodingException, IOException {
-        URL url = new URL("http://192.168.100.43:3000/api/token");
+        //URL url = new URL("http://192.168.100.43:3000/api/token");
+        URL url = new URL("http://192.168.1.78:3000/api/token");
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("usuario", nUsuario);
         params.put("contrasena", contrasenna);
@@ -98,7 +99,7 @@ public class ApiService {
     }
 
     public String buscar(String filtro, String token) throws MalformedURLException, ProtocolException, UnsupportedEncodingException, IOException {
-        URL url = new URL("http://192.168.100.43:3000/api/buscar-libro");
+        URL url = new URL("http://192.168.1.78:3000/api/buscar-libro");
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("filtro", filtro);
         StringBuilder postData = new StringBuilder();

@@ -1,7 +1,9 @@
 let libros = null;
 
-const cargarLibros = () =>
+const cargarLibrosA = () =>
         {
+            $("#librosCentralizados").hide();
+            $("#libroslocales").show();
             $.ajax(
                     {
                         "url": "api/book/getAll",
@@ -13,6 +15,7 @@ const cargarLibros = () =>
                 if (data.error != null) {
                     alert(data.error);
                 } else {
+                    libros = null;
                     libros = data;
                     let contenido = "";
                     for (let i = 0; i < libros.length; i++)
@@ -21,7 +24,7 @@ const cargarLibros = () =>
                         contenido += "<td>" + libros[i].nombre + "</td>";
                         contenido += "<td>" + libros[i].descripcion + "</td>";
                         contenido += "<td>" + libros[i].tema + "</td>";
-                        contenido += "<td> <button class='btn btn-outline-primary' onclick='mostrarLibro(" + i + ")'><i class='fa fa-pencil-alt'></i></button> </td>";
+                        contenido += "<td> <button class='btn btn-outline-info' onclick='abrirLibro(" + i + ")'><i class='far fa-eye'></i></button> </td>";
                         contenido += "</tr>";
                     }
                     $("#tbodyLibroA").html(contenido);
@@ -36,3 +39,63 @@ const volver = () =>
     cargarLibros();
     limpiar();
 };
+
+const generarTokenA = () => {
+    let data = {
+        "nUsuario": nUsuario,
+        "contrasenna": contrasenna
+    };
+    
+    $.ajax(
+            {
+                "url": "api/book/token",
+                "type": "POST",
+                "async": true,
+                "data": data
+            }
+    ).done(data =>
+    {
+        let t = JSON.stringify(data).replace(/['"]+/g, '');
+        sessionStorage.setItem("token", t);
+    });
+};
+
+const buscarCentralizados = () =>
+        {
+            $("#librosCentralizados").show();
+            $("#libroslocales").hide();
+            let filtro = $("#txtfiltroA").val();
+            token = sessionStorage.getItem("token");
+            let data = {
+                "filtro": filtro,
+                "token": token
+            };
+            $.ajax(
+                    {
+                        "url": "api/book/searchCentralizado",
+                        "type": "POST",
+                        "async": true,
+                        "data": data
+                    }
+            ).done(data =>
+            {
+                if (data.error != null) {
+                    alert(data.error);
+                } else {
+                    libros = null;
+                    libros = data;
+                    let contenido = "";
+                    for (let i = 0; i < libros.length; i++)
+                    {
+                        contenido += "<tr>";
+                        contenido += "<td>" + libros[i].libro_nombre + "</td>";
+                        contenido += "<td>" + libros[i].tema + "</td>";
+                        contenido += "<td>" + libros[i].nombre_universidad + "</td>";
+                        contenido += "<td> <button class='btn btn-outline-info' onclick='abrirLibro(" + i + ")'><i class='far fa-eye'></i></button> </td>";
+                        contenido += "</tr>";
+                    }
+                    $("#tbodyLibroAC").html(contenido);
+                }
+            }
+            );
+        };

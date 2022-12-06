@@ -7,10 +7,10 @@ function moduloLibrosA()
     }).done(function (data)
     {
         $("#contenedor").html(data);
-        cargarLibros();
-        nUsuario = "20001468";
-        contrasenna = "20001468";
-        generarToken();
+        cargarLibrosA();
+        nUsuario = "20002149";
+        contrasenna = "20002149";
+        generarTokenA();
     });
 }
 
