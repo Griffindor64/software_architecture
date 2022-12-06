@@ -14,20 +14,20 @@ public class LibroController {
         libros = objLibAS.getAlllibros();
         return libros;
     }
-    
+
     public List<Libro> consultarLibros(String filtro) throws Exception {
         LibroAppServicies objLibAS = new LibroAppServicies();
         List<Libro> libros = new ArrayList<>();
         libros = objLibAS.consultarLibros(filtro);
         return libros;
     }
-    
+
     public String recuperarLibro(int id_libro) throws Exception {
-                LibroAppServicies objLibAS = new LibroAppServicies();
+        LibroAppServicies objLibAS = new LibroAppServicies();
         String archivo = objLibAS.recuperarLibro(id_libro);
         return archivo;
     }
-    
+
     public List<LibroViewModel> mostrarLibrosPublic() throws Exception {
         LibroAppServicies objLibAS = new LibroAppServicies();
         List<LibroViewModel> libros = new ArrayList<>();
@@ -40,23 +40,18 @@ public class LibroController {
         int id = objLibAS.registrarLibro(libro);
         return id;
     }
-    
+
     public int registrarLibroPublic(LibroViewModel libro) throws Exception {
         LibroAppServicies objLibAS = new LibroAppServicies();
         int id = objLibAS.registrarLibroPublic(libro);
         return id;
     }
-    
-    public Boolean actualizarLibro(Libro libro) throws Exception {
+
+    public Boolean actualizarLibro(Libro libro, int archivo) throws Exception {
         LibroAppServicies objLibAS = new LibroAppServicies();
-        return objLibAS.actualizarLibro(libro);
+        return objLibAS.actualizarLibro(libro, archivo);
     }
-    
-    public Boolean actualizarLibroPublic(LibroViewModel libro) throws Exception {
-        LibroAppServicies objLibAS = new LibroAppServicies();
-        return objLibAS.actualizarLibroPublic(libro);
-    }
-    
+
     public Boolean eliminarLibro(int id) throws Exception {
         LibroAppServicies objLibAS = new LibroAppServicies();
         return objLibAS.eliminarLibro(id);

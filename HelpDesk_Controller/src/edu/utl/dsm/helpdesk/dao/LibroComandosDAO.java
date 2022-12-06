@@ -47,12 +47,19 @@ public class LibroComandosDAO {
         return idGenerado;
     }
 
-    public void actualizarLibro(Libro libro) throws Exception {
+    public void actualizarLibro(Libro libro, int archivo) throws Exception {
         //Se define la consulta a ejecutar
-        String query = "update libro set nombre = '" + libro.getNombre() + "', "
-                + "descripcion = '" + libro.getDescripcion() + "' , tema = '" + libro.getTema() + "', "
-                + "archivo = '" + libro.getNombre() + "'"
-                + " where id = " + libro.getId() + ";";
+        String query;
+        if (archivo == 2) {
+            query = "update libro set nombre = '" + libro.getNombre() + "', "
+                    + "descripcion = '" + libro.getDescripcion() + "' , tema = '" + libro.getTema() + "'"
+                    + " where id = " + libro.getId() + ";";
+        } else {
+            query = "update libro set nombre = '" + libro.getNombre() + "', "
+                    + "descripcion = '" + libro.getDescripcion() + "' , tema = '" + libro.getTema() + "', "
+                    + "archivo = '" + libro.getArchivo() + "'"
+                    + " where id = " + libro.getId() + ";";
+        }
 
         //Generamos el objeto de la conexion
         ConexionMySQL connMySQL = new ConexionMySQL();
