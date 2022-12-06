@@ -90,7 +90,7 @@ public class UsuarioComandosDAO {
     public Usuario iniciarSesion(String nombreUsuario, String contrasennia) throws Exception {
 
         //Se define la consulta a ejecutar
-        String query = "SELECT * FROM usuario WHERE nombreUsuario = ? AND contrasennia = ?;";
+        String query = "SELECT * FROM usuario WHERE nombreUsuario = ? AND contrasennia = ? AND estatus = 1;";
         //Generamos el objeto de la conexion
         ConexionMySQL connMySQL = new ConexionMySQL();
         //Abrimos la conexion
@@ -153,7 +153,7 @@ public class UsuarioComandosDAO {
 
     public List<Usuario> mostrarUsuario(int rol) throws Exception {
         //Se define la consulta a ejecutar
-        String query = "select * from usuario where rol = " + rol + ";";
+        String query = "select * from usuario where rol = " + rol + " AND estatus = 1;";
         List<Usuario> alumnos = new ArrayList<>();
         //Generamos el objeto de la conexion
         ConexionMySQL connMySQL = new ConexionMySQL();
