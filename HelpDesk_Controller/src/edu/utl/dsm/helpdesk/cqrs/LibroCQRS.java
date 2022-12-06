@@ -35,10 +35,10 @@ public class LibroCQRS {
         return idL;
     }
     
-    public Boolean actualizarLibro(Libro libro) throws Exception {
+    public Boolean actualizarLibro(Libro libro, int archivo) throws Exception {
         LibroComandosDAO objLibDAO = new LibroComandosDAO();
         if(validarVacio(libro)){
-                objLibDAO.actualizarLibro(libro);
+                objLibDAO.actualizarLibro(libro, archivo);
                 return true;
         } else {
             return false;

@@ -8,7 +8,7 @@ const generarToken = () => {
         "nUsuario": nUsuario,
         "contrasenna": contrasenna
     };
-    
+
     $.ajax(
             {
                 "url": "api/book/token",
@@ -60,6 +60,7 @@ const cargarLibros = () =>
                     }
             ).done(data =>
             {
+
                 if (data.error != null) {
                     alert(data.error);
                 } else {
@@ -105,6 +106,7 @@ const insertarLibro = () =>
                 "data": data
             }
     ).done(data => {
+        archivo = null;
         if (data.error != null) {
             alert(data.error);
         } else {
@@ -133,7 +135,7 @@ const actualizarLibro = () =>
         "usuario": usuario,
         "token": token
     };
-        alert(JSON.stringify(data));
+    alert(JSON.stringify(data));
 
     $.ajax(
             {
@@ -144,6 +146,7 @@ const actualizarLibro = () =>
             }
     ).done(data =>
     {
+        archivo = null;
         if (data.result != null)
         {
             alert("Modificación exitosa");
@@ -151,6 +154,7 @@ const actualizarLibro = () =>
         } else if (data.error !== null)
         {
             alert("Error");
+            cargarLibros();
         }
         limpiar();
     }
@@ -165,8 +169,10 @@ const mostrarLibro = (i) =>
             $('#txtTema').val(libros[i].tema);
             $("#btnActualizar").show();
             $("#btnInsertar").hide();
-
-
+            $("#pdfHolder").show();
+            var src = "data:application/pdf;base64,";
+            src += libros[i].archivo;
+            document.getElementById("pdfHolder").data = src;
         };
 
 const limpiar = () =>
@@ -175,11 +181,8 @@ const limpiar = () =>
     $('#txtNombre').val("");
     $('#txtDescripcion').val("");
     $('#txtTema').val("");
+    document.getElementById("pdfHolder").data = "";
+    $("#pdfHolder").hide();
+    $('#txtArchivo').val("");
 };
 
-const volver = () =>
-{
-    $("#btnConsultar").show();
-    cargarLibros();
-    limpiar();
-};

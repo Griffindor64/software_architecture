@@ -54,15 +54,9 @@ public class LibroAppServicies {
         return id;
     }
 
-    public Boolean actualizarLibro(Libro libro) throws Exception {
+    public Boolean actualizarLibro(Libro libro, int archivo) throws Exception {
         LibroCQRS lCQRS = new LibroCQRS();
-        return lCQRS.actualizarLibro(libro);
-    }
-
-    public Boolean actualizarLibroPublic(LibroViewModel l) throws Exception {
-        LibroCQRS lCQRS = new LibroCQRS();
-        Libro libro = new Libro(l.getId_lbr(), l.getNombre_lbr(), l.getDescripcion_lbr(), l.getTema_lbr(), new Usuario(0, "", "", "", "", 0));
-        return lCQRS.actualizarLibro(libro);
+        return lCQRS.actualizarLibro(libro, archivo);
     }
 
     public Boolean eliminarLibro(int id) throws Exception {

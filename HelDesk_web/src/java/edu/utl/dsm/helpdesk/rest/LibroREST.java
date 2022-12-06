@@ -71,13 +71,17 @@ public class LibroREST {
             @FormParam("token") @DefaultValue("") String token) {
         String out = "";
         try {
-            Gson objGS = new Gson();
+            int arc = 1;
+            if(archivo.isEmpty()){
+                arc = 2;
+                System.out.println("vacio");
+            }
             LibroController objLibC = new LibroController();
             ApiService objAS = new ApiService();
             Gson gs = new Gson();
             Usuario objU = gs.fromJson(usuario, Usuario.class);
             Libro objLibro = new Libro(Integer.valueOf(id), nombre, descripcion, tema, objU, archivo);
-            if (objLibC.actualizarLibro(objLibro) && objLibro.getId() != 0) {
+            if (objLibC.actualizarLibro(objLibro, arc) && objLibro.getId() != 0) {
                 objAS.guardarLibroCentralizado(objLibro, token);
                 out = "{\"result\":\"La actualización del libro resultó exitosa\"}";
             } else {
