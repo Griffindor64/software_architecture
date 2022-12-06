@@ -3,6 +3,7 @@ let libros = null;
 const cargarLibrosA = () =>
         {
             $("#librosCentralizados").hide();
+            $("#seccionLibro").hide();
             $("#libroslocales").show();
             $.ajax(
                     {
@@ -38,6 +39,13 @@ const volver = () =>
     $("#btnConsultar").show();
     cargarLibros();
     limpiar();
+};
+
+const abrirLibro = (i) =>{
+    $("#seccionLibro").show();
+    var src = "data:application/pdf;base64,";
+    src += libros[i].archivo;
+    document.getElementById("pdfHolderA").data = src;
 };
 
 const generarTokenA = () => {
