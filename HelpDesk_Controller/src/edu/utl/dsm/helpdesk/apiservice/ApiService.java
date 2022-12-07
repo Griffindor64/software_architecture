@@ -17,8 +17,8 @@ import java.util.Map;
 public class ApiService {
 
     public String getToken(String nUsuario,String contrasenna ) throws MalformedURLException, ProtocolException, UnsupportedEncodingException, IOException {
-        URL url = new URL("http://192.168.53.74:3000/api/token");
-//        URL url = new URL("http://192.168.1.78:3000/api/token");
+//        URL url = new URL("http://192.168.53.74:3000/api/token");
+        URL url = new URL("http://192.168.1.78:3000/api/token");
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("usuario", nUsuario);
         params.put("contrasena", contrasenna);
@@ -58,7 +58,7 @@ public class ApiService {
     }
 
     public String guardarLibroCentralizado(Libro libro, String token) throws MalformedURLException, ProtocolException, UnsupportedEncodingException, IOException {
-        URL url = new URL("http://192.168.53.74:3000/api/registrar-libro");
+        URL url = new URL("http://192.168.1.78:3000/api/registrar-libro");
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("libro_id", libro.getId());
         params.put("libro_nombre", libro.getNombre());
@@ -100,7 +100,7 @@ public class ApiService {
 
     public String buscar(String filtro, String token) throws MalformedURLException, ProtocolException, UnsupportedEncodingException, IOException {
 //        URL url = new URL("http://192.168.1.78:3000/api/buscar-libro");
-        URL url = new URL("http://192.168.53.74:3000/api/buscar-libro");
+        URL url = new URL("http://192.168.1.78:3000/api/buscar-libro");
 
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("filtro", filtro);
@@ -140,7 +140,7 @@ public class ApiService {
     }
 
     public String obtenerLibro(String universidad_libro_id, String universidad_id, String token) throws MalformedURLException, ProtocolException, UnsupportedEncodingException, IOException {
-        URL url = new URL("http://192.168.53.74:3000/api/recuperar-libro");
+        URL url = new URL("http://192.168.1.78:3000/api/recuperar-libro");
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("universidad_libro_id", universidad_libro_id);
         params.put("universidad_id", universidad_id);
@@ -180,7 +180,7 @@ public class ApiService {
     }
 
     public String actualizarUni(String nueva_contrasena, String nombre_universidad, String grupo, String metodo, String url_recuperacion_libro, String token) throws MalformedURLException, ProtocolException, UnsupportedEncodingException, IOException {
-        URL url = new URL("http://192.168.53.74:3000/api/actualizar-perfil");
+        URL url = new URL("http://192.168.1.78:3000/api/actualizar-perfil");
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("nueva_contrasena", nueva_contrasena);
         params.put("nombre_universidad", nombre_universidad);
