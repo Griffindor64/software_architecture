@@ -8,8 +8,8 @@ function moduloLibrosA()
     {
         $("#contenedor").html(data);
         cargarLibrosA();
-        nUsuario = "20002149";
-        contrasenna = "20002149";
+        nUsuario = "20001468";
+        contrasenna = "20001468";
         generarTokenA();
     });
 }

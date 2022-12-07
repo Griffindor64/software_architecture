@@ -25,7 +25,7 @@ const cargarLibrosA = () =>
                         contenido += "<td>" + libros[i].nombre + "</td>";
                         contenido += "<td>" + libros[i].descripcion + "</td>";
                         contenido += "<td>" + libros[i].tema + "</td>";
-                        contenido += "<td> <button class='btn btn-outline-info' onclick='abrirLibro(" + i + ")'><i class='far fa-eye'></i></button> </td>";
+                        contenido += "<td> <button class='btn btn-outline-primary' onclick='abrirLibro(" + i + ")'><i class='far fa-eye'></i></button> </td>";
                         contenido += "</tr>";
                     }
                     $("#tbodyLibroA").html(contenido);
@@ -41,8 +41,37 @@ const volver = () =>
     limpiar();
 };
 
-const abrirLibro = (i) =>{
+
+const recuperarLibro = (i) => {
+    let data = {
+        "universidad_libro_id": libros[i].universidad_libro_id,
+        "universidad_id": libros[i].universidad_id,
+        "token": sessionStorage.getItem('token')
+    };
+
+    $.ajax(
+            {
+                "url": "api/book/getLibro",
+                "type": "POST",
+                "async": true,
+                "data": data
+            }
+    ).done(data =>
+    {
+        $("#seccionLibro").show();
+        $("#pdfHolderA").show();
+        var src = "data:application/pdf;base64,";
+        src += data.libro_base64;
+        document.getElementById("pdfHolderA").data = src;
+        alert( document.getElementById("pdfHolderA").data);
+
+    });
+
+};
+
+const abrirLibro = (i) => {
     $("#seccionLibro").show();
+    $("#pdfHolderA").show();
     var src = "data:application/pdf;base64,";
     src += libros[i].archivo;
     document.getElementById("pdfHolderA").data = src;
@@ -53,7 +82,7 @@ const generarTokenA = () => {
         "nUsuario": nUsuario,
         "contrasenna": contrasenna
     };
-    
+
     $.ajax(
             {
                 "url": "api/book/token",
@@ -64,12 +93,15 @@ const generarTokenA = () => {
     ).done(data =>
     {
         let t = JSON.stringify(data).replace(/['"]+/g, '');
+        console.log(t);
         sessionStorage.setItem("token", t);
     });
 };
 
 const buscarCentralizados = () =>
         {
+            $("#seccionLibro").hide();
+            $("#pdfHolderA").hide();
             $("#librosCentralizados").show();
             $("#libroslocales").hide();
             let filtro = $("#txtfiltroA").val();
@@ -99,7 +131,7 @@ const buscarCentralizados = () =>
                         contenido += "<td>" + libros[i].libro_nombre + "</td>";
                         contenido += "<td>" + libros[i].tema + "</td>";
                         contenido += "<td>" + libros[i].nombre_universidad + "</td>";
-                        contenido += "<td> <button class='btn btn-outline-info' onclick='abrirLibro(" + i + ")'><i class='far fa-eye'></i></button> </td>";
+                        contenido += "<td> <button class='btn btn-outline-primary' onclick='recuperarLibro(" + i + ")'><i class='far fa-eye'></i></button> </td>";
                         contenido += "</tr>";
                     }
                     $("#tbodyLibroAC").html(contenido);
